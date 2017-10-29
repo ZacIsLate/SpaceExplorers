@@ -1,0 +1,41 @@
+{
+  "name": "Space-explorers",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib",
+    "test": "test"
+  },
+  "dependencies": {
+    "eslint": "^4.8.0",
+    "express": "^4.16.2",
+    "mkdirp": "^0.5.1",
+    "mongoose": "^4.12.3",
+    "morgan": "^1.9.0",
+    "rimraf": "^2.6.2",
+    "shortid": "^2.2.8"
+  },
+  "devDependencies": {
+    "body-parser": "^1.18.2",
+    "mocha": "^4.0.1"
+  },
+  "scripts": {
+    "lint": "eslint .",
+    "mocha": "mocha --recursive",
+    "pretest": "npm run lint",
+    "test": "npm run mocha",
+    "testU": "npm run mocha -- ./test/unit",
+    "testE2E": "npm run mocha -- ./test/e2e"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/martsyalis"
+  },
+  "authors": "Zac, Maryus, Michele, Shane",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ZacIsLate/SpaceExplorers"
+  },
+  "homepage": "https://github.com/ZacIsLate/SpaceExplorers"
+}
