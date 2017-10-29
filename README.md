@@ -20,3 +20,24 @@ Coding consistency
 Behavior
 1. Take breaks every 30 minutes?
 2. Stand ups twice a day?
+3. No pulling in your own pull request
+
+User Stories
+1. As a user, I would like the game to have a definitive ending.
+2. I would like the game to be challenging.
+3. I would like to be able to play the game with different characters, ships, enemies and encounters.
+4. I would like the game to have a good story.
+5. I would like to save my progress.
+6. I would like an engaging and intuitive way to play.
+7. I would like a rich environment.
+
+Developer stories
+1. Code should be consistent and readable.
+2. Code should be resilient and reliable.
+3. Code should be tested.
+4. Errors should be handled.
+5. App should be secure and won't release personal information.
+6. User should sign up and sign in.
+7. Code should be modular and expandable.
+8. Use db smartly.
+
