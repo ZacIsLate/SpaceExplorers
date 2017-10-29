@@ -1,5 +1,5 @@
 {
-  "name": "simple-database",
+  "name": "Space-explorers",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -11,6 +11,7 @@
     "eslint": "^4.8.0",
     "mkdirp": "^0.5.1",
     "mongoose": "^4.12.3",
+    "morgan": "^1.9.0",
     "rimraf": "^2.6.2",
     "shortid": "^2.2.8"
   },
@@ -30,10 +31,10 @@
     "type": "git",
     "url": "git+https://github.com/martsyalis"
   },
-  "author": "Maryus Martsyalis martsyalis@gmai.com",
+  "authors": "Zac, Maryus, Michele, Shane",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/robnit/simple-database/issues"
+    "url": "https://github.com/ZacIsLate/SpaceExplorers"
   },
-  "homepage": "https://github.com/robnit/simple-database#readme"
+  "homepage": "https://github.com/ZacIsLate/SpaceExplorers"
 }
