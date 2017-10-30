@@ -2,7 +2,7 @@ const request = require('./request');
 const { assert } = require('chai');
 const mongoose = require('mongoose');
 
-describe.only('Authentication API', () => {
+describe('Authentication API', () => {
 
     beforeEach( () => mongoose.connection.dropDatabase());
     let token = null;
@@ -28,7 +28,6 @@ describe.only('Authentication API', () => {
                     assert.equal(err.status, 400);
                 }
             );
-
     });
 
     it('cant sign up without password', () => {
@@ -58,7 +57,5 @@ describe.only('Authentication API', () => {
                 }
             );
     });
-
-
 
 });
