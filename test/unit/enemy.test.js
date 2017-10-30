@@ -17,7 +17,7 @@ describe('Enemy model', ()=>{
         const enemy = new Enemy({});
         const { errors } = enemy.validateSync();
         assert.equal(errors.name.kind, 'required');
-        assert.equal(errors.Damage.kind, 'required');
-        assert.equal(errors.HealthPoints.kind, 'required');
+        assert.equal(errors.damage.kind, 'required');
+        assert.equal(errors.healthPoints.kind, 'required');
     });
 });
