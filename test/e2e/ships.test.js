@@ -58,6 +58,17 @@ describe('Ship CRUD', () => {
                         });
                 });
         });
+
+        it('get a ship by id', () => {
+            let razaShip = null;
+            return request.post('/api/ships')
+                .send(shipData[1])
+                .then(res => {
+                    razaShip = res.body;
+                    return request.get(`/api/ships/${razaShip._id}`);
+                })
+                .then(res => assert.deepEqual(res.body, razaShip));
+        });
     });
 });
 
