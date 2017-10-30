@@ -19,7 +19,7 @@ describe('Event model', ()=>{
                         outcome: 0
                     },
                     failure:{
-                        description: 'You have decided to engage the Advanced Cylon War Raider squad. Your point defence system was overwhelmed by the swarming raiders and your ship sustained heavy damage',
+                        description: 'You have decided to engage the Advanced Cylon War Raider squad. Your point defense system was overwhelmed by the swarming raiders and your ship sustained heavy damage',
                         outcome: -40
                     }
                 },
@@ -28,7 +28,7 @@ describe('Event model', ()=>{
                     option: 'Diplomacy',
                     difficulty: 0,
                     success:{
-                        description: 'You have decided to negotiate with the Advanced Cylon War Raider squad, surprisingly they decided to barry the hatcher of war and become friends. Apparently all that was needed was a little human/robot kindness.',
+                        description: 'You have decided to negotiate with the Advanced Cylon War Raider squad. Surprisingly they decided to bury the hatchet of war and become friends. Apparently all that was needed was a little human/robot kindness.',
                         outcome: 0
                     },
 
@@ -45,7 +45,7 @@ describe('Event model', ()=>{
                         outcome: 0
                     },
                     failure:{
-                        description: 'You have decided to outrun the Advanced Cylon War Raider squad. Unfortunetly fast and nimble raiders manage to inflict significant damage before you ship mangages to jump away',
+                        description: 'You have decided to outrun the Advanced Cylon War Raider squad. Unfortunately fast and nimble raiders manage to inflict significant damage before your ship manages to jump away',
                         outcome: -40
                     }
                 },
