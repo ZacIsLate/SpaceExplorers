@@ -4,7 +4,7 @@ const Event = require('../../lib/models/event');
 
 describe('Event model', ()=>{
 
-    it('Validates a good enemy model', () => {
+    it('Validates a good event model', () => {
          
         const event = new Event({
             scenario: 'You have encountered an Advanced Cylon War Raider Battalion inside of an astroid field!',
