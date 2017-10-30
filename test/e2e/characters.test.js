@@ -47,7 +47,7 @@ describe('Characters API', () => {
             });
     }),
 
-    it.only('gets a character by id', () => {
+    it('gets a character by id', () => {
         let savedCharacter = null;
         return request.post('/api/characters')
             .send(characterData[0])
