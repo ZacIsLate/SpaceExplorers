@@ -4,7 +4,7 @@ const User = require('../../lib/models/user');
 describe('User Model test', () => {
     
     const user = new User({
-        name: 'Admiral_Adama', 
+        name: 'Admiral_Adama'
     });
 
     it('generates hash from password', ()=> {
