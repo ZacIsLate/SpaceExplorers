@@ -10,11 +10,15 @@ describe('Characters API', () => {
     characterData = [
         {
             name: 'Ford Prefect',
-            description: 'human/alien travel writer'
+            description: 'human/alien travel writer',
+            user:'590643bc2cd3da2808b0e651',
+            ship:'590643bc2cd3da2808b0e651'
         }, 
         {
             name: 'Mark Watney',
-            description: 'Maritian - colonized a planet on his own'
+            description: 'Maritian - colonized a planet on his own',
+            user:'590643bc2cd3da2808b0e651',
+            ship:'590643bc2cd3da2808b0e651'
         }
     ];
 
@@ -41,13 +45,11 @@ describe('Characters API', () => {
             })
             .then(res => {
                 assert.deepEqual(res.body, saved);
-                // assert.equal(res.body[1].pob, 'Concord CA');
-                // assert.equal(res.body[1].dob.slice(0, 4), 1956);
                 assert.equal(res.body[1].name, 'Mark Watney');
             });
     }),
 
-    it.only('gets a character by id', () => {
+    it('gets a character by id', () => {
         let savedCharacter = null;
         return request.post('/api/characters')
             .send(characterData[0])
@@ -59,7 +61,7 @@ describe('Characters API', () => {
             
             })
             .then(res => {
-                assert.equal(res.body.name, savedCharacter.name);
+                assert.equal(res.body.name, 'Ford Prefect');
             });
     });
 
