@@ -10,11 +10,15 @@ describe('Characters API', () => {
     characterData = [
         {
             name: 'Ford Prefect',
-            description: 'human/alien travel writer'
+            description: 'human/alien travel writer',
+            user:'590643bc2cd3da2808b0e651',
+            ship:'590643bc2cd3da2808b0e651'
         }, 
         {
             name: 'Mark Watney',
-            description: 'Maritian - colonized a planet on his own'
+            description: 'Maritian - colonized a planet on his own',
+            user:'590643bc2cd3da2808b0e651',
+            ship:'590643bc2cd3da2808b0e651'
         }
     ];
 
@@ -57,7 +61,7 @@ describe('Characters API', () => {
             
             })
             .then(res => {
-                assert.equal(res.body.name, savedCharacter.name);
+                assert.equal(res.body.name, 'Ford Prefect');
             });
     });
 
