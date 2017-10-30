@@ -6,7 +6,9 @@ describe( 'Character model', () => {
     it('check if good model', () => {
         const character = new Character({
             name: 'Ellen Ripley',
-            description: 'Warrant officer who survived multiple encounters with Xenomorphs'
+            description: 'Warrant officer who survived multiple encounters with Xenomorphs',
+            ship:'590643bc2cd3da2808b0e651',
+            user: '590643bc2cd3da2808b0e651'
         });
         assert.equal(character.validateSync(), undefined);
     });
