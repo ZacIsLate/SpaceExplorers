@@ -40,7 +40,7 @@ describe('enemy API', () => {
             .then(()=>{
                 return request.get('/api/enemies')
                     .then(gotEnemies =>{ 
-                        gotEnemies = gotEnemies.sort((a, b) => a._id < b._id);
+                        gotEnemies = gotEnemies.body.sort((a, b) => a._id < b._id);
                         allEnemies = allEnemies.sort((a, b) => a._id < b._id);
                         assert.deepEqual(allEnemies, gotEnemies);
                     });
