@@ -7,8 +7,8 @@ describe('enemy API', () => {
 
     const cylonWarRaider = {
         name: 'Advanced Cylon War Raider Battalion',
-        Damage: 25,
-        HealthPoints: 55,
+        damage: 25,
+        healthPoints: 55,
     };
 
     it('Should save an enemy with an id', () => {
