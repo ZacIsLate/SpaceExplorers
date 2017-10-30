@@ -24,11 +24,37 @@ describe('Environment CRUD', () => {
         ];
     });
 
-    describe.only('POST environment', () => {
+    describe('POST environments', () => {
         it('returns env with a new id', () => {
             return request.post('/api/environments')
                 .send(envData[0])
                 .then(res => assert.ok(res.body._id));
+        });
+    });
+
+    describe('GET environments', () => {
+        it('returns all', () => {
+            const savedEnv = [
+                request.post('/api/environments')
+                    .send(envData[0]),
+                request.post('/api/environments')
+                    .send(envData[1])
+            ];
+
+            return Promise.all(savedEnv)
+                .then(resArray => {
+                    resArray = resArray.map(res => {
+                        return {
+                            name: res.body.name,
+                            _id: res.body._id
+                        };
+                    });
+                    return request.get('/api/environments')
+                        .then(received => {
+                            assert.deepInclude(received.body, resArray[0]);
+                            assert.deepInclude(received.body, resArray[1]);
+                        });
+                });
         });
     });
 });
