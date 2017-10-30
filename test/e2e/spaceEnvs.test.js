@@ -2,7 +2,7 @@ const { assert } = require('chai');
 const mongoose = require('mongoose').connection;
 const request = require('./request');
 
-describe('Environment CRUD', () => {
+describe('SpaceEnv CRUD', () => {
     let envData = null;
 
     beforeEach(() => {
@@ -24,20 +24,20 @@ describe('Environment CRUD', () => {
         ];
     });
 
-    describe('POST environments', () => {
+    describe('POST spaceEnvs', () => {
         it('returns env with a new id', () => {
-            return request.post('/api/environments')
+            return request.post('/api/spaceEnvs')
                 .send(envData[0])
                 .then(res => assert.ok(res.body._id));
         });
     });
 
-    describe('GET environments', () => {
+    describe('GET spaceEnvs', () => {
         it('returns all when no id is given', () => {
             const savedEnv = [
-                request.post('/api/environments')
+                request.post('/api/spaceEnvs')
                     .send(envData[0]),
-                request.post('/api/environments')
+                request.post('/api/spaceEnvs')
                     .send(envData[1])
             ];
 
@@ -49,7 +49,7 @@ describe('Environment CRUD', () => {
                             _id: res.body._id
                         };
                     });
-                    return request.get('/api/environments')
+                    return request.get('/api/spaceEnvs')
                         .then(received => {
                             assert.deepInclude(received.body, resArray[0]);
                             assert.deepInclude(received.body, resArray[1]);
@@ -59,11 +59,11 @@ describe('Environment CRUD', () => {
 
         it('gets an env by id', () => {
             let asteroidEnv = null;
-            return request.post('/api/environments')
+            return request.post('/api/spaceEnvs')
                 .send(envData[1])
                 .then(res => {
                     asteroidEnv = res.body;
-                    return request.get(`/api/environments/${asteroidEnv._id}`);
+                    return request.get(`/api/spaceEnvs/${asteroidEnv._id}`);
                 })
                 .then(res => {
                     assert.deepEqual(res.body, asteroidEnv);

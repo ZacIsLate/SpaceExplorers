@@ -8,7 +8,7 @@ describe('Event model', ()=>{
          
         const event = new Event({
             scenario: 'You have encountered an Advanced Cylon War Raider Battalion inside of an astroid field!',
-            environment: '590643bc2cd3da2808b0e651', 
+            spaceEnv: '590643bc2cd3da2808b0e651', 
             enemy: '590643bc2cd3da2808b0e651',
             actions: [
                 {
@@ -59,7 +59,7 @@ describe('Event model', ()=>{
         const event = new Event({});
         const { errors } = event.validateSync();
         assert.equal(errors.scenario.kind, 'required');
-        assert.equal(errors.environment.kind, 'required');
+        assert.equal(errors.spaceEnv.kind, 'required');
         assert.equal(errors.enemy.kind, 'required');
     });
 });
