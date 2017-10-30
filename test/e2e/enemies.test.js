@@ -50,9 +50,11 @@ describe('enemy API', () => {
     it('Should get an enemy by id', ()=>{
         return request.post('/api/enemies')
             .send(klingonWarbird)
-            .then( savedEnemy => {
+            .then( res => {
+                const savedEnemy = res.body;
                 return request.get(`/api/enemies/${savedEnemy._id}`)
                     .then( gotEnemy => {
+                        gotEnemy = gotEnemy.body;
                         assert.deepEqual(savedEnemy, gotEnemy);
                     });
             });
