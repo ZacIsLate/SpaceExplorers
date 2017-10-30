@@ -18,5 +18,10 @@ describe('Ship Model', () => {
         assert.ok(!farScape.validateSync());
         assert.ok(farScape.name);
     });
-    
+    it(' required fields include', () => {
+        delete shipData.name;
+        const farScape = new Ship(shipData);
+
+        assert.equal(farScape.validateSync().errors.name.kind, 'required');
+    });
 });
