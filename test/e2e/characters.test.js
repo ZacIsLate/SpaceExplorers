@@ -41,13 +41,11 @@ describe('Characters API', () => {
             })
             .then(res => {
                 assert.deepEqual(res.body, saved);
-                // assert.equal(res.body[1].pob, 'Concord CA');
-                // assert.equal(res.body[1].dob.slice(0, 4), 1956);
                 assert.equal(res.body[1].name, 'Mark Watney');
             });
     }),
 
-    it.only('gets a character by id', () => {
+    it('gets a character by id', () => {
         let savedCharacter = null;
         return request.post('/api/characters')
             .send(characterData[0])
