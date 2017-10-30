@@ -33,7 +33,7 @@ describe('Environment CRUD', () => {
     });
 
     describe('GET environments', () => {
-        it('returns all', () => {
+        it('returns all when no id is given', () => {
             const savedEnv = [
                 request.post('/api/environments')
                     .send(envData[0]),
@@ -54,6 +54,19 @@ describe('Environment CRUD', () => {
                             assert.deepInclude(received.body, resArray[0]);
                             assert.deepInclude(received.body, resArray[1]);
                         });
+                });
+        });
+
+        it('gets an env by id', () => {
+            let asteroidEnv = null;
+            return request.post('/api/environments')
+                .send(envData[1])
+                .then(res => {
+                    asteroidEnv = res.body;
+                    return request.get(`/api/environments${asteroidEnv._id}`);
+                })
+                .then(res => {
+                    assert.deepEqual(res.body, asteroidEnv);
                 });
         });
     });
