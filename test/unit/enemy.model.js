@@ -12,4 +12,12 @@ describe('Enemy model', ()=>{
         });
         assert.equal(enemy.validateSync(), undefined);
     });
+
+    it('Checks for required fields', () => {
+        const enemy = new Enemy({});
+        const { errors } = enemy.validateSync();
+        assert.equal(errors.name.kind, 'required');
+        assert.equal(errors.damage.kind, 'required');
+        assert.equal(errors.HealthPoints.kind, 'required');
+    })
 });
