@@ -27,4 +27,12 @@ describe('Event model', ()=>{
         });
         assert.equal(event.validateSync(), undefined);
     });
+
+    it('Checks for required fields', () => {
+        const event = new Event({});
+        const { errors } = event.validateSync();
+        assert.equal(errors.scenario.kind, 'required');
+        assert.equal(errors.enviornment.kind, 'required');
+        assert.equal(errors.enemy.kind, 'required');
+    });
 });
