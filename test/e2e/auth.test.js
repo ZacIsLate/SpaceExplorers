@@ -1,10 +1,10 @@
 const request = require('./request');
 const { assert } = require('chai');
-const mongoose = require('mongoose');
+const db = require('./db');
 
 describe('Authentication API', () => {
 
-    beforeEach( () => mongoose.connection.dropDatabase());
+    beforeEach( () =>db.drop());
     let token = null;
 
     beforeEach( ()=> {

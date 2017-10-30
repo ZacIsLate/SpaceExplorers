@@ -1,7 +1,7 @@
 const { assert } = require('chai');
-const Environment = require('../../lib/models/Environment');
+const SpaceEnv = require('../../lib/models/spaceEnv');
 
-describe('Environment Model', () => {
+describe('SpaceEnv Model', () => {
     let envData = null;
 
     beforeEach(() => envData = {
@@ -12,7 +12,7 @@ describe('Environment Model', () => {
     });
 
     it('Valid Model', () => {
-        const currentEnv = new Environment(envData);
+        const currentEnv = new SpaceEnv(envData);
         
         assert.ok(!currentEnv.validateSync());
         assert.ok(currentEnv.name);
@@ -20,7 +20,7 @@ describe('Environment Model', () => {
 
     it('required fields included', () => {
         delete envData.name;
-        const currentEnv = new Environment(envData);
+        const currentEnv = new SpaceEnv(envData);
 
         assert.equal(currentEnv.validateSync().errors.name.kind, 'required');
     });

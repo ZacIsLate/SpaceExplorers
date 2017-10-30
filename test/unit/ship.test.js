@@ -1,5 +1,5 @@
 const { assert } = require('chai');
-const Ship = require('../../lib/models/Ship');
+const Ship = require('../../lib/models/ship');
 
 describe('Ship Model', () => {
     let shipData = null;
