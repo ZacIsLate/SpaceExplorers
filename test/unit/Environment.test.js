@@ -17,4 +17,11 @@ describe('Environment Model', () => {
         assert.ok(!currentEnv.validateSync());
         assert.ok(currentEnv.name);
     });
+
+    it('required fields included', () => {
+        delete envData.name;
+        const currentEnv = new Environment(envData);
+
+        assert.equal(currentEnv.validateSync().errors.name.kind, 'required');
+    });
 });
