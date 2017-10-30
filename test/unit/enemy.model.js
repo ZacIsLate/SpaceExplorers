@@ -7,8 +7,8 @@ describe('Enemy model', ()=>{
     it('Validates a good enemy model', () => {
         const enemy = new Enemy({
             name: 'Advanced Cylon War Raider Battalion',
-            AttackPower: 25,
-            HealthPoints: 55
+            Damage: 25,
+            HealthPoints: 55, 
         });
         assert.equal(enemy.validateSync(), undefined);
     });
