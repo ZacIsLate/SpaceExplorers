@@ -183,7 +183,7 @@ describe('enemy API', () => {
     it('Deletes event by ID', () =>{
         let savedEvent = null;
         return request.post('/api/events')
-            .send(envData[0])
+            .send(testEvent)
             .then(res => {
                 savedEvent = res.body;
                 return request.delete(`/api/events/${savedEvent._id}`);
