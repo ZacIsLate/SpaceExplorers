@@ -3,7 +3,7 @@ const Character = require('../../lib/models/character');
 
 describe( 'Character model', () => {
     
-    it('check if good model', () => {
+    it.only('check if good model', () => {
         const character = new Character({
             name: 'Ellen Ripley',
             description: 'Warrant officer who survived multiple encounters with Xenomorphs',
@@ -13,7 +13,7 @@ describe( 'Character model', () => {
         assert.equal(character.validateSync(), undefined);
     });
 
-    it.only('checks required fields', () => {
+    it('checks required fields', () => {
         const character = new Character({ });
         const { errors } = character.validateSync();
         assert.equal(errors.name.kind, 'required');
