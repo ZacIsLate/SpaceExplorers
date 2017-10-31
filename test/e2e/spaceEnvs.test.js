@@ -11,13 +11,13 @@ describe('SpaceEnv CRUD', () => {
         envData = [
             {
                 name: 'Astroid Field',
-                dmg: 25,
+                damage: 25,
                 description: 'The asteroid belt is the circumstellar disc in the Solar System located roughly between the orbits of the planets Mars and Jupiter. It is occupied by numerous irregularly shaped bodies called asteroids or minor planets.',
                 globalDmg: 15
             },
             {
                 name: 'Black Hole',
-                dmg: 50,
+                damage: 50,
                 description: 'A black hole is a region of spacetime exhibiting such strong gravitational effects that nothing—not even particles and electromagnetic radiation such as light—can escape from inside it.',
                 globalDmg: 25
             }

@@ -10,7 +10,7 @@ describe('enemy API', () => {
     };
     const environment = {
         name: 'Astroid Field',
-        dmg: 25,
+        damage: 25,
         description: 'The asteroid belt is the circumstellar disc in the Solar System located roughly between the orbits of the planets Mars and Jupiter. It is occupied by numerous irregularly shaped bodies called asteroids or minor planets.',
         globalDmg: 15
     };

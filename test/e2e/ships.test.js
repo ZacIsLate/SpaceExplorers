@@ -11,15 +11,15 @@ describe('Ship CRUD', () => {
         shipData = [
             {
                 name: 'Moya',
-                hp: 1500,
-                dmg: 50,
+                healthPoints: 1500,
+                damage: 50,
                 description: 'A living sentient bio-mechanical space ship.',
                 class: 'Leviathan'
             },
             {
                 name: 'Raza',
-                hp: 900,
-                dmg: 200,
+                healthPoints: 900,
+                damage: 200,
                 description: 'The Raza is a faster-than-light armed space transport equipped with various countermeasures such as vector thrust capable nacelles. The interiors feature a spacious bridge, a small mess hall, and private crew quarters for at least six crew members. Gravity aboard the Raza is artificially generated.',
                 class: 'StarShip'
             }
