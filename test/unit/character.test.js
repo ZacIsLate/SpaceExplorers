@@ -19,7 +19,7 @@ describe( 'Character model', () => {
         assert.equal(character.validateSync(), undefined);
     });
 
-    it.only('checks required fields', () => {
+    it('checks required fields', () => {
         const character = new Character({ 
             ship:{
                 description: 'A living sentient bio-mechanical space ship.',
@@ -28,9 +28,21 @@ describe( 'Character model', () => {
         });
         const { errors } = character.validateSync();
         assert.equal(errors.name.kind, 'required');
+    });
+    
+    it('checks for nested required fields', () => {
+        const character = new Character({ 
+            ship:{
+                description: 'A living sentient bio-mechanical space ship.',
+                class: 'Leviathan'
+            },
+            log: ['badid']
+        });
+        const { errors } = character.validateSync();
         assert.equal(errors['ship.name'].kind, 'required');
         assert.equal(errors['ship.hp'].kind, 'required');
         assert.equal(errors['ship.dmg'].kind, 'required');
+        assert.equal(errors['ship.log'].kind, 'required');
     });
 
 });
