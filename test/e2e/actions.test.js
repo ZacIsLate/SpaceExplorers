@@ -115,13 +115,11 @@ describe.only('resolveEvent function', () =>{
     });
 
 
-    it('checks if route has access to current charecter and the event', ()=>{
-        console.log('here is the current event in test:', savedChar.log.currentEvent);
-        return request.get(`/api/game/character/${savedChar._id}/actions`)
+    it('checks if route has access to current character and the event and posts an action', ()=>{
+        return request.post(`/api/game/character/${savedChar._id}/actions`)
             .then( ({body}) => {
-                console.log(body);
+                assert.ok(body.log.currentEvent);
                 assert.ok(body);
             });
     });
-
 });
