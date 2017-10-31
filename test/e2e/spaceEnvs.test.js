@@ -84,5 +84,19 @@ describe('SpaceEnv CRUD', () => {
                     assert.deepEqual(res.body.nModified === 1, true);
                 });
         });
+
+        it('Should delete environment by ID', () =>{
+            let savedEnv = null;
+            return request.post('/api/spaceEnvs')
+                .send(envData[0])
+                .then(res => {
+                    savedEnv = res.body;
+                    return request.delete(`/api/enemies/${savedEnv._id}`);
+                })
+                .then( res => {
+                    assert.deepEqual(res.body, { removed: true});
+                    return request.get(`/api/enemies/${savedEnv._id}`);
+                });        
+        });
     });
 });
