@@ -74,5 +74,19 @@ describe('enemy API', () => {
                 assert.deepEqual(res.body.nModified === 1, true);
             });
     });
+
+    it('Should delete enemy by ID', () =>{
+        let savedEnemy = null;
+        return request.post('/api/enemies')
+            .send(klingonWarbird)
+            .then(res => {
+                savedEnemy = res.body;
+                return request.delete(`/api/enemies/${savedEnemy._id}`);
+            })
+            .then( res => {
+                assert.deepEqual(res.body, { removed: true});
+                return request.get(`/api/enemies/${savedEnemy._id}`);
+            });        
+    });
     
 });
