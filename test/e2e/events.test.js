@@ -180,4 +180,18 @@ describe('enemy API', () => {
             });
     });
 
+    it('Deletes event by ID', () =>{
+        let savedEvent = null;
+        return request.post('/api/events')
+            .send(envData[0])
+            .then(res => {
+                savedEvent = res.body;
+                return request.delete(`/api/events/${savedEvent._id}`);
+            })
+            .then( res => {
+                assert.deepEqual(res.body, { removed: true});
+                return request.get(`/api/characters/${savedEvent._id}`);
+            });        
+    });
+
 });
