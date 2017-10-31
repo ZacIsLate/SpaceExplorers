@@ -1,7 +1,6 @@
 const assert = require('chai').assert;
 const Event = require('../../lib/models/event');
 
-
 describe('Event model', ()=>{
 
     it('Validates a good event model', () => {

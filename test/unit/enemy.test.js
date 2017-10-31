@@ -1,7 +1,6 @@
 const assert = require('chai').assert;
 const Enemy = require('../../lib/models/enemy');
 
-
 describe('Enemy model', ()=>{
 
     it('Validates a good enemy model', () => {
