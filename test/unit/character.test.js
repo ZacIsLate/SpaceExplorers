@@ -13,10 +13,11 @@ describe( 'Character model', () => {
         assert.equal(character.validateSync(), undefined);
     });
 
-    it('checks required fields', () => {
+    it.only('checks required fields', () => {
         const character = new Character({ });
         const { errors } = character.validateSync();
         assert.equal(errors.name.kind, 'required');
+        assert.equal(errors.ship.kind, 'required');
     });
 
 });
