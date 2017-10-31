@@ -151,7 +151,7 @@ describe('enemy API', () => {
             });
     });
 
-    it.only('Should get an event by id', ()=>{
+    it('Should get an event by id', ()=>{
         return request.post('/api/events')
             .send(testEvent)
             .then(res => {
