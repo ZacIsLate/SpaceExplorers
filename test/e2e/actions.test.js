@@ -3,7 +3,7 @@ const assert = require('chai').assert;
 const db = require('./db');
 
 
-describe.only('resolveEvent function', () =>{
+describe('actions API', () =>{
     beforeEach( () => db.drop());
 
     let savedEnvironment = null;
@@ -15,8 +15,8 @@ describe.only('resolveEvent function', () =>{
 
     const ship = {
         name: 'Moya',
-        hp: 1000,
-        dmg: 100,
+        healthPoints: 1000,
+        damage: 100,
         description: 'A living sentient bio-mechanical space ship.',
         class: 'Leviathan'
     };
@@ -29,7 +29,7 @@ describe.only('resolveEvent function', () =>{
 
     const environment = {
         name: 'Astroid Field',
-        dmg: 25,
+        damage: 25,
         description: 'The asteroid belt is the circumstellar disc in the Solar System located roughly between the orbits of the planets Mars and Jupiter. It is occupied by numerous irregularly shaped bodies called asteroids or minor planets.',
         globalDmg: 15
     };
@@ -120,8 +120,7 @@ describe.only('resolveEvent function', () =>{
             .send({action:'attack'})
             .then( ({body}) => {
                 console.log(body);
-                assert.ok(body[0].log.currentEvent);
-                assert.ok(body[1]);
+                assert.ok(body);
             });
     });
 });

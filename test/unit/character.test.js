@@ -9,8 +9,8 @@ describe( 'Character model', () => {
             description: 'Warrant officer who survived multiple encounters with Xenomorphs',
             ship:{
                 name: 'Moya',
-                hp: 1000,
-                dmg: 100,
+                healthPoints: 1000,
+                damage: 100,
                 description: 'A living sentient bio-mechanical space ship.',
                 class: 'Leviathan'
             },
@@ -44,9 +44,9 @@ describe( 'Character model', () => {
         });
         const { errors } = character.validateSync();
         assert.equal(errors['ship.name'].kind, 'required');
-        assert.equal(errors['ship.hp'].kind, 'required');
-        assert.equal(errors['ship.dmg'].kind, 'required');
         assert.equal(errors['log.currentEvent'].kind, 'required');
+        assert.equal(errors['ship.healthPoints'].kind, 'required');
+        assert.equal(errors['ship.damage'].kind, 'required');
     });
 
 });
