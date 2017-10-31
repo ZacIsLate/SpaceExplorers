@@ -2,14 +2,16 @@ const request = require('./request');
 const assert = require('chai').assert;
 const db = require('./db');
 
-describe('Characters API', () => {
+
+describe('actions API', () =>{
+    beforeEach( () => db.drop());
+
     let savedEnvironment = null;
     let savedEnemy = null;
     let savedEvent = null;
     let testEvent = null;
-    let characterData = null;
-
-    beforeEach(() => db.drop());
+    let savedChar= null;
+    let char = null;
 
     const ship = {
         name: 'Moya',
@@ -18,13 +20,13 @@ describe('Characters API', () => {
         description: 'A living sentient bio-mechanical space ship.',
         class: 'Leviathan'
     };
-
+    
     const enemy = {
         name: 'Advanced Cylon War Raider Battalion',
         damage: 25,
         healthPoints: 55,
     };
-    
+
     const environment = {
         name: 'Astroid Field',
         damage: 25,
@@ -32,7 +34,7 @@ describe('Characters API', () => {
         globalDmg: 15
     };
 
-    beforeEach( ()=> {
+    beforeEach( () => {
         return Promise.all([
             request.post('/api/enemies')
                 .send(enemy)
@@ -92,90 +94,33 @@ describe('Characters API', () => {
                         savedEvent = got.body;
                     })
                     .then( () => {
-                        characterData = [
-                            {
-                                name: 'Ford Prefect',
-                                description: 'human/alien travel writer',
-                                user:'590643bc2cd3da2808b0e651',
-                                ship: ship,
-                                log:{
-                                    currentEvent: savedEvent._id,
-                                }
-                            }, 
-                            {
-                                name: 'Mark Watney',
-                                description: 'Maritian - colonized a planet on his own',
-                                user:'590643bc2cd3da2808b0e651',
-                                ship: ship,
-                                log:{
-                                    currentEvent: savedEvent._id,
-                                }
+                        char = {
+                            name: 'Ford Prefect',
+                            description: 'human/alien travel writer',
+                            user:'590643bc2cd3da2808b0e651',
+                            ship: ship,
+                            log:{
+                                currentEvent: savedEvent._id,
                             }
-                        ];
+                        };
                     });
+                    
             });
     });
 
-    it('saves a character', () => {
+    beforeEach( () => {
         return request.post('/api/characters')
-            .send(characterData[0])
-            .then(({ body }) => assert.equal(body.name, characterData[0].name));
-    }),
+            .send(char)
+            .then( ({body}) => savedChar = body );
+    });
 
-    it('gets all characters', () => {
-        let characterCollection = characterData.map(item => {
-            return request.post('/api/characters')
-                .send(item)
-                .then(res => res.body);
-        });
 
-        let saved = null;
-        return Promise.all(characterCollection)
-            .then(_saved => {
-                saved = _saved;
-                return request.get('/api/characters');
-            })
-            .then(res => {
-                assert.deepEqual(res.body, saved);
-                assert.equal(res.body[1].name, 'Mark Watney');
+    it('checks if route has access to current character and the event and posts an action', ()=>{
+        return request.post(`/api/game/character/${savedChar._id}/actions`)
+            .send({action:'attack'})
+            .then( ({body}) => {
+                console.log(body);
+                assert.ok(body);
             });
-    }),
-
-    it('gets a character by id', () => {
-        let savedCharacter = null;
-        return request.post('/api/characters')
-            .send(characterData[0])
-            .then(res => {
-                savedCharacter = res.body;
-            })
-            .then(() => {
-                return request.get(`/api/characters/${savedCharacter._id}`);
-            
-            })
-            .then(res => assert.equal(res.body.name, 'Ford Prefect'));
-    });
-
-    it('Should update a character', ()=>{
-        let savedCharacter = null; 
-        return request.post('/api/characters')
-            .send(characterData[0])
-            .then( res => {
-                savedCharacter = res.body;
-                characterData[0].name = 'Helena Cain';
-                return request.put(`/api/characters/${savedCharacter._id}`)
-                    .send(characterData[0]);
-            })
-            .then(res => assert.deepEqual(res.body.nModified === 1, true));
-    });
-
-    it('Deletes Character by ID', () =>{
-        let savedCharacter = null;
-        return request.post('/api/characters')
-            .send(characterData[0])
-            .then(res => {
-                savedCharacter = res.body;
-                return request.delete(`/api/characters/${savedCharacter._id}`);
-            })
-            .then( res => assert.deepEqual(res.body, { removed: true}));   
     });
 });
