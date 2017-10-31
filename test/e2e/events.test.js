@@ -165,4 +165,19 @@ describe('enemy API', () => {
 
     });
 
+    it('Should update an event', ()=>{
+        let savedEvent = null; 
+        return request.post('/api/events')
+            .send(testEvent)
+            .then( res => {
+                savedEvent = res.body;
+                testEvent.scenario = '#######';
+                return request.put(`/api/events/${savedEvent._id}`)
+                    .send(savedEvent);
+            })
+            .then(res => {
+                assert.deepEqual(res.body.nModified === 1, true);
+            });
+    });
+
 });
