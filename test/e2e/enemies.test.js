@@ -67,7 +67,7 @@ describe('enemy API', () => {
             .then( res => {
                 savedEnemy = res.body;
                 cylonWarRaider.name = '#######';
-                return request.put(`/api/enimes/${savedEnemy._id}`)
+                return request.put(`/api/enemies/${savedEnemy._id}`)
                     .send(cylonWarRaider);
             })
             .then(res => {
