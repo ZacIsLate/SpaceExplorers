@@ -84,6 +84,19 @@ describe('Ship CRUD', () => {
                     assert.deepEqual(res.body.nModified === 1, true);
                 });
         });
+
+        it('Should delete ship by ID', () =>{
+            let savedShip = null;
+            return request.post('/api/ships')
+                .send(shipData[0])
+                .then(res => {
+                    savedShip = res.body;
+                    return request.delete(`/api/ships/${savedShip._id}`);
+                })
+                .then( res => {
+                    assert.deepEqual(res.body, { removed: true});
+                });        
+        });
     });
 });
 
