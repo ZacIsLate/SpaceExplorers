@@ -33,9 +33,7 @@ describe('Characters API', () => {
     it('saves a character', () => {
         return request.post('/api/characters')
             .send(characterData[0])
-            .then(({ body }) => {
-                assert.equal(body.name, characterData[0].name);
-            });
+            .then(({ body }) => assert.equal(body.name, characterData[0].name));
     }),
 
     it('gets all characters', () => {
@@ -68,9 +66,7 @@ describe('Characters API', () => {
                 return request.get(`/api/characters/${savedCharacter._id}`);
             
             })
-            .then(res => {
-                assert.equal(res.body.name, 'Ford Prefect');
-            });
+            .then(res => assert.equal(res.body.name, 'Ford Prefect'));
     });
 
     it('Should update a character', ()=>{
@@ -83,9 +79,7 @@ describe('Characters API', () => {
                 return request.put(`/api/characters/${savedCharacter._id}`)
                     .send(characterData[0]);
             })
-            .then(res => {
-                assert.deepEqual(res.body.nModified === 1, true);
-            });
+            .then(res => assert.deepEqual(res.body.nModified === 1, true));
     });
 
     it('Deletes Character by ID', () =>{
@@ -96,8 +90,6 @@ describe('Characters API', () => {
                 savedCharacter = res.body;
                 return request.delete(`/api/characters/${savedCharacter._id}`);
             })
-            .then( res => {
-                assert.deepEqual(res.body, { removed: true});
-            });        
+            .then( res => assert.deepEqual(res.body, { removed: true}));        
     });
 });
