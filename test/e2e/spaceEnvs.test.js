@@ -91,11 +91,10 @@ describe('SpaceEnv CRUD', () => {
                 .send(envData[0])
                 .then(res => {
                     savedEnv = res.body;
-                    return request.delete(`/api/enemies/${savedEnv._id}`);
+                    return request.delete(`/api/spaceEnvs/${savedEnv._id}`);
                 })
                 .then( res => {
                     assert.deepEqual(res.body, { removed: true});
-                    return request.get(`/api/enemies/${savedEnv._id}`);
                 });        
         });
     });

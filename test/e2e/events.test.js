@@ -190,7 +190,6 @@ describe('enemy API', () => {
             })
             .then( res => {
                 assert.deepEqual(res.body, { removed: true});
-                return request.get(`/api/characters/${savedEvent._id}`);
             });        
     });
 
