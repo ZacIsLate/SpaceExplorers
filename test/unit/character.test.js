@@ -42,7 +42,7 @@ describe( 'Character model', () => {
         assert.equal(errors['ship.name'].kind, 'required');
         assert.equal(errors['ship.hp'].kind, 'required');
         assert.equal(errors['ship.dmg'].kind, 'required');
-        assert.equal(errors['ship.log'].kind, 'required');
+        assert.equal(errors.log.kind, 'required');
     });
 
 });
