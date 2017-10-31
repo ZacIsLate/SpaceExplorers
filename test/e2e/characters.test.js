@@ -87,4 +87,18 @@ describe('Characters API', () => {
                 assert.deepEqual(res.body.nModified === 1, true);
             });
     });
+
+    it('Deletes Character by ID', () =>{
+        let savedCharacter = null;
+        return request.post('/api/characters')
+            .send(characterData[0])
+            .then(res => {
+                savedCharacter = res.body;
+                return request.delete(`/api/characters/${savedCharacter._id}`);
+            })
+            .then( res => {
+                assert.deepEqual(res.body, { removed: true});
+                return request.get(`/api/characters/${savedCharacter._id}`);
+            });        
+    });
 });
