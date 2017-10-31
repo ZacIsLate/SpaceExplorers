@@ -149,6 +149,19 @@ describe('enemy API', () => {
                         assert.deepEqual(savedEvents, gotEvents);
                     });
             });
+    });
+
+    it('Should get an event by id', ()=>{
+        return request.post('/api/events')
+            .send(testEvent)
+            .then(res => {
+                const savedEvent = res.body;
+                return request.get(`/api/events/${savedEvent._id}`)
+                    .then( gotEvent => {
+                        gotEvent = gotEvent.body;
+                        assert.deepEqual(savedEvent, gotEvent);
+                    });
+            });
 
     });
 
