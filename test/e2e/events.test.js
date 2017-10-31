@@ -137,7 +137,7 @@ describe('enemy API', () => {
         let savedEvents = [];
         let testEventData = [testEvent, testEvent2];
         return Promise.all(testEventData.map( event =>{
-            request.post('/api/events')
+            return request.post('/api/events')
                 .send(event)
                 .then(res => savedEvents.push(res.body));
         }))
