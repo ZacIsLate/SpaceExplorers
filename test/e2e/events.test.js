@@ -131,6 +131,24 @@ describe('enemy API', () => {
                 assert.ok(savedEvent._id);
                 assert.equal(savedEvent.scenario, testEvent.scenario);    
             });
+    });
+
+    it('Should get all events', () => {
+        let savedEvents = [];
+        let testEventData = [testEvent, testEvent2];
+        return Promise.all(testEventData.map( event =>{
+            request.post('/api/events')
+                .send(event)
+                .then(res => savedEvents.push(res.body));
+        }))
+            .then(() => {
+                return request.get('/api/events')
+                    .then(gotEvents => {
+                        gotEvents = gotEvents.body.sort((a, b) => a._id < b._id);
+                        savedEvents.sort((a, b) => a._id < b._id);
+                        assert.deepEqual(savedEvents, gotEvents);
+                    });
+            });
 
     });
 
