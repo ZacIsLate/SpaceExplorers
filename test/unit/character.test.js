@@ -14,7 +14,8 @@ describe.only( 'Character model', () => {
                 description: 'A living sentient bio-mechanical space ship.',
                 class: 'Leviathan'
             },
-            user: '590643bc2cd3da2808b0e651'
+            user: '590643bc2cd3da2808b0e651',
+            log: ['590643bc2cd3da2808b0e651']
         });
         assert.equal(character.validateSync(), undefined);
     });
@@ -39,11 +40,11 @@ describe.only( 'Character model', () => {
             log: ['badid']
         });
         const { errors } = character.validateSync();
-        console.log('$$$$$$$$$$$$$$$$$$', errors.log);
         assert.equal(errors['ship.name'].kind, 'required');
         assert.equal(errors['ship.hp'].kind, 'required');
         assert.equal(errors['ship.dmg'].kind, 'required');
-        assert.equal(errors.log.kind, 'required');
+        assert.equal(errors.log.kind, 'Array');
+        assert.equal(errors.log.reason.kind, 'ObjectId');
     });
 
 });
