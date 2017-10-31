@@ -79,5 +79,4 @@ describe('Characters API', () => {
                 assert.deepEqual(res.body.nModified === 1, true);
             });
     });
-
 });
