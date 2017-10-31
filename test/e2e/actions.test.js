@@ -117,9 +117,11 @@ describe.only('resolveEvent function', () =>{
 
     it('checks if route has access to current character and the event and posts an action', ()=>{
         return request.post(`/api/game/character/${savedChar._id}/actions`)
+            .send({action:'attack'})
             .then( ({body}) => {
-                assert.ok(body.log.currentEvent);
-                assert.ok(body);
+                console.log(body);
+                assert.ok(body[0].log.currentEvent);
+                assert.ok(body[1]);
             });
     });
 });
