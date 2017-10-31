@@ -65,4 +65,19 @@ describe('Characters API', () => {
             });
     });
 
+    it('Should update a character', ()=>{
+        let savedCharacter = null; 
+        return request.post('/api/characters')
+            .send(characterData[0])
+            .then( res => {
+                savedCharacter = res.body;
+                characterData[0].name = 'Helena Cain';
+                return request.put(`/api/characters/${savedCharacter._id}`)
+                    .send(characterData[0]);
+            })
+            .then(res => {
+                assert.deepEqual(res.body.nModified === 1, true);
+            });
+    });
+
 });
