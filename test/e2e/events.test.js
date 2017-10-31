@@ -16,7 +16,8 @@ describe('enemy API', () => {
     };
     let savedEnvironment = null;
     let savedEnemy = null;
-    let event = null;
+    let testEvent = null;
+    let testEvent2 = null;
 
 
     beforeEach(() => mongoose.connection.dropDatabase());
@@ -31,7 +32,51 @@ describe('enemy API', () => {
                 .then(res => savedEnvironment = res.body)
         ])
             .then(() => {
-                event = {
+                testEvent = {
+                    scenario: 'You have encountered an Advanced Cylon War Raider Battalion inside of an astroid field!',
+                    spaceEnv: savedEnvironment._id,
+                    enemy: savedEnemy._id,
+                    actions: [
+                        {
+                            option: 'Attack',
+                            difficulty: 3,
+                            success: {
+                                description: 'You have decided to engage the Advanced Cylon War Raider squad, Your point defences cut each squadron in turn, sustaining minimal damage',
+                                outcome: 0
+                            },
+                            failure: {
+                                description: 'You have decided to engage the Advanced Cylon War Raider squad. Your point defense system was overwhelmed by the swarming raiders and your ship sustained heavy damage',
+                                outcome: -40
+                            }
+                        },
+
+                        {
+                            option: 'Diplomacy',
+                            difficulty: 0,
+                            success: {
+                                description: 'You have decided to negotiate with the Advanced Cylon War Raider squad. Surprisingly they decided to bury the hatchet of war and become friends. Apparently all that was needed was a little human/robot kindness.',
+                                outcome: 0
+                            },
+
+                            failure: {
+                                description: 'not gonna happen',
+                                outcome: 1
+                            }
+                        },
+                        {
+                            option: 'Run',
+                            difficulty: 6,
+                            success: {
+                                description: 'You have decided to try and outrun the Advanced Cylon War Raider squad. Your swift ship leaves the squad in the dust',
+                                outcome: 0
+                            },
+                            failure: {
+                                description: 'You have decided to outrun the Advanced Cylon War Raider squad. Unfortunately fast and nimble raiders manage to inflict significant damage before your ship manages to jump away',
+                                outcome: -40
+                            }
+                        }]
+                };
+                testEvent2 = {
                     scenario: 'You have encountered an Advanced Cylon War Raider Battalion inside of an astroid field!',
                     spaceEnv: savedEnvironment._id,
                     enemy: savedEnemy._id,
@@ -80,11 +125,11 @@ describe('enemy API', () => {
 
     it('Should save an event with an id', () => {
         return request.post('/api/events')
-            .send(event)
+            .send(testEvent)
             .then(savedEvent => {
                 savedEvent = savedEvent.body;
                 assert.ok(savedEvent._id);
-                assert.equal(savedEvent.scenario, event.scenario);    
+                assert.equal(savedEvent.scenario, testEvent.scenario);    
             });
 
     });
