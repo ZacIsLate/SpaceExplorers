@@ -69,5 +69,20 @@ describe('SpaceEnv CRUD', () => {
                     assert.deepEqual(res.body, asteroidEnv);
                 });
         });
+
+        it('Should update a spaceEnv', ()=>{
+            let savedEnvironment = null; 
+            return request.post('/api/events')
+                .send(envData[0])
+                .then( res => {
+                    savedEnvironment = res.body;
+                    envData[0].name = '#######';
+                    return request.put(`/api/spaceEnvs/${savedEnvironment._id}`)
+                        .send(savedEnvironment);
+                })
+                .then(res => {
+                    assert.deepEqual(res.body.nModified === 1, true);
+                });
+        });
     });
 });
