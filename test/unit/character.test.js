@@ -1,7 +1,7 @@
 const assert = require('chai').assert;
 const Character = require('../../lib/models/character');
 
-describe.only( 'Character model', () => {
+describe( 'Character model', () => {
     
     it('check if good model', () => {
         const character = new Character({

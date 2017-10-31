@@ -59,5 +59,20 @@ describe('enemy API', () => {
                     });
             });
     });
+
+    it('Should update an enemy', ()=>{
+        let savedEnemy = null; 
+        return request.post('/api/enemies')
+            .send(cylonWarRaider)
+            .then( res => {
+                savedEnemy = res.body;
+                cylonWarRaider.name = '#######';
+                return request.put(`/api/enimes/${savedEnemy._id}`)
+                    .send(cylonWarRaider);
+            })
+            .then(res => {
+                assert.deepEqual(res.body.nModified === 1, true);
+            });
+    });
     
 });
