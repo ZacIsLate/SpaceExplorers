@@ -1,5 +1,6 @@
 
 # SpaceBack_enders
+[![Build Status](https://travis-ci.org/ZacIsLate/SpaceExplorers.svg?branch=master)](https://travis-ci.org/ZacIsLate/SpaceExplorers)
 
 Coding consistency
 1. good: fn()  bad: fn ()
