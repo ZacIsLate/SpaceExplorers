@@ -9,8 +9,8 @@ describe('Characters API', () => {
 
     const shipData ={
         name: 'Moya',
-        hp: 1000,
-        dmg: 100,
+        healthPoints: 1000,
+        damage: 100,
         description: 'A living sentient bio-mechanical space ship.',
         class: 'Leviathan'
     };
