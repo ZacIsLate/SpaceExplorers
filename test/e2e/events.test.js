@@ -24,7 +24,10 @@ describe('enemy API', () => {
         return Promise.all([
             request.post('/api/enemies')
                 .send(enemy)
-                .then(res => re)
+                .then(res => savedEnemy = res.body),
+            request.post('/api/environments')
+                .send(environment)
+                .then(res => savedEnvironment = res.body)
         ])
     });
 
