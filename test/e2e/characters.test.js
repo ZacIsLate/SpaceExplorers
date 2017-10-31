@@ -7,18 +7,26 @@ describe('Characters API', () => {
     let characterData = [];
     beforeEach(() => db.drop());
 
+    const shipData ={
+        name: 'Moya',
+        hp: 1000,
+        dmg: 100,
+        description: 'A living sentient bio-mechanical space ship.',
+        class: 'Leviathan'
+    };
+
     characterData = [
         {
             name: 'Ford Prefect',
             description: 'human/alien travel writer',
             user:'590643bc2cd3da2808b0e651',
-            ship:'590643bc2cd3da2808b0e651'
+            ship: shipData
         }, 
         {
             name: 'Mark Watney',
             description: 'Maritian - colonized a planet on his own',
             user:'590643bc2cd3da2808b0e651',
-            ship:'590643bc2cd3da2808b0e651'
+            ship: shipData
         }
     ];
 
