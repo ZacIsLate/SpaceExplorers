@@ -1,31 +1,24 @@
 const request = require('./request');
 const assert = require('chai').assert;
 const db = require('./db');
-const resolveEvent = require('../../lib/gameFunction/resolveEvent');
 
 
-describe.only('resolveEvent function', ()=>{
-    beforeEach( ()=> db.drop());
+describe.only('resolveEvent function', () =>{
+    beforeEach( () => db.drop());
 
     let savedEnvironment = null;
     let savedEnemy = null;
     let savedEvent = null;
     let testEvent = null;
     let savedChar= null;
+    let char = null;
 
-    const ship ={
+    const ship = {
         name: 'Moya',
         hp: 1000,
         dmg: 100,
         description: 'A living sentient bio-mechanical space ship.',
         class: 'Leviathan'
-    };
-
-    const char ={
-        name: 'Ford Prefect',
-        description: 'human/alien travel writer',
-        user:'590643bc2cd3da2808b0e651',
-        ship: ship
     };
     
     const enemy = {
@@ -41,9 +34,7 @@ describe.only('resolveEvent function', ()=>{
         globalDmg: 15
     };
 
-
     beforeEach( () => {
-
         return Promise.all([
             request.post('/api/enemies')
                 .send(enemy)
@@ -101,7 +92,19 @@ describe.only('resolveEvent function', ()=>{
                     .send(testEvent)
                     .then(got => {
                         savedEvent = got.body;
+                    })
+                    .then( () => {
+                        char = {
+                            name: 'Ford Prefect',
+                            description: 'human/alien travel writer',
+                            user:'590643bc2cd3da2808b0e651',
+                            ship: ship,
+                            log:{
+                                currentEvent: savedEvent._id,
+                            }
+                        };
                     });
+                    
             });
     });
 
@@ -112,10 +115,13 @@ describe.only('resolveEvent function', ()=>{
     });
 
 
-    it('checks if function has access to current charecter and the event', ()=>{
-        console.log('here are the ids:',savedChar._id, savedEvent._id);
-        resolveEvent(savedChar._id, savedEvent._id)
-            .then( () => assert.ok(savedChar._id));
+    it('checks if route has access to current charecter and the event', ()=>{
+        console.log('here is the current event in test:', savedChar.log.currentEvent);
+        return request.get(`/api/game/character/${savedChar._id}/actions`)
+            .then( ({body}) => {
+                console.log(body);
+                assert.ok(body);
+            });
     });
 
 });

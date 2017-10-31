@@ -15,7 +15,10 @@ describe( 'Character model', () => {
                 class: 'Leviathan'
             },
             user: '590643bc2cd3da2808b0e651',
-            log: ['590643bc2cd3da2808b0e651']
+            log: {
+                currentEvent:'590643bc2cd3da2808b0e651',
+                allEvents:'590643bc2cd3da2808b0e651'
+            }
         });
         assert.equal(character.validateSync(), undefined);
     });
@@ -43,8 +46,7 @@ describe( 'Character model', () => {
         assert.equal(errors['ship.name'].kind, 'required');
         assert.equal(errors['ship.hp'].kind, 'required');
         assert.equal(errors['ship.dmg'].kind, 'required');
-        assert.equal(errors.log.kind, 'Array');
-        assert.equal(errors.log.reason.kind, 'ObjectId');
+        assert.equal(errors['log.currentEvent'].kind, 'required');
     });
 
 });
