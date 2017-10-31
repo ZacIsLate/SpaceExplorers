@@ -79,6 +79,7 @@ describe('SpaceEnv CRUD', () => {
                     envData[0].name = '#######';
                     return request.put(`/api/spaceEnvs/${savedEnvironment._id}`)
                         .send(envData[0]);
+                        
                 })
                 .then(res => {
                     assert.deepEqual(res.body.nModified === 1, true);
