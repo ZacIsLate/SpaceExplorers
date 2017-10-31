@@ -26,7 +26,7 @@ describe('enemy API', () => {
             request.post('/api/enemies')
                 .send(enemy)
                 .then(res => savedEnemy = res.body),
-            request.post('/api/environments')
+            request.post('/api/spaceEnvs')
                 .send(environment)
                 .then(res => savedEnvironment = res.body)
         ])
