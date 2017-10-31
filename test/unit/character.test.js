@@ -1,7 +1,7 @@
 const assert = require('chai').assert;
 const Character = require('../../lib/models/character');
 
-describe( 'Character model', () => {
+describe.only( 'Character model', () => {
     
     it('check if good model', () => {
         const character = new Character({
@@ -39,6 +39,7 @@ describe( 'Character model', () => {
             log: ['badid']
         });
         const { errors } = character.validateSync();
+        console.log('$$$$$$$$$$$$$$$$$$', errors.log);
         assert.equal(errors['ship.name'].kind, 'required');
         assert.equal(errors['ship.hp'].kind, 'required');
         assert.equal(errors['ship.dmg'].kind, 'required');
