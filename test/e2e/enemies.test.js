@@ -70,9 +70,7 @@ describe('enemy API', () => {
                 return request.put(`/api/enemies/${savedEnemy._id}`)
                     .send(cylonWarRaider);
             })
-            .then(res => {
-                assert.deepEqual(res.body.nModified === 1, true);
-            });
+            .then(res => assert.deepEqual(res.body.nModified === 1, true));
     });
 
     it('Should delete enemy by ID', () =>{
@@ -83,9 +81,7 @@ describe('enemy API', () => {
                 savedEnemy = res.body;
                 return request.delete(`/api/enemies/${savedEnemy._id}`);
             })
-            .then( res => {
-                assert.deepEqual(res.body, { removed: true});
-            });        
+            .then( res => assert.deepEqual(res.body, { removed: true}));        
     });
     
 });

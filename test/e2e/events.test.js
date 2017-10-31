@@ -175,9 +175,7 @@ describe('enemy API', () => {
                 return request.put(`/api/events/${savedEvent._id}`)
                     .send(savedEvent);
             })
-            .then(res => {
-                assert.deepEqual(res.body.nModified === 1, true);
-            });
+            .then(res => assert.deepEqual(res.body.nModified === 1, true));
     });
 
     it('Deletes event by ID', () =>{
@@ -188,9 +186,7 @@ describe('enemy API', () => {
                 savedEvent = res.body;
                 return request.delete(`/api/events/${savedEvent._id}`);
             })
-            .then( res => {
-                assert.deepEqual(res.body, { removed: true});
-            });        
+            .then( res => assert.deepEqual(res.body, { removed: true}));        
     });
 
 });
