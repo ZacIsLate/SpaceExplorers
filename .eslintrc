@@ -6,6 +6,8 @@
   },
   "extends": "eslint:recommended",
   "rules": {
+    
+    "no-constant-condition": ["error", { "checkLoops": false }],
     "no-console": "warn",
     "indent": [
       "error",
