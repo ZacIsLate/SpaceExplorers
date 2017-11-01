@@ -3,7 +3,7 @@ const assert = require('chai').assert;
 const db = require('./db');
 
 
-describe('actions API', () =>{
+describe.only('actions API', () =>{
     beforeEach( () => db.drop());
 
     let savedEnvironment = null;
@@ -119,8 +119,7 @@ describe('actions API', () =>{
         return request.post(`/api/game/character/${savedChar._id}/actions`)
             .send({action:'attack'})
             .then( ({body}) => {
-                console.log(body);
-                assert.ok(body);
+                assert.ok(body.damage);
             });
     });
 });
