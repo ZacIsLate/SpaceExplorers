@@ -15,6 +15,7 @@
     "chai": "^4.1.2",
     "eslint": "^4.8.0",
     "express": "^4.16.2",
+    "jsonfile": "^4.0.0",
     "jsonwebtoken": "^8.1.0",
     "mkdirp": "^0.5.1",
     "mongoose": "^4.12.5",
