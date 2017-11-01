@@ -101,7 +101,7 @@ describe('SpaceEnv CRUD', () => {
 
     describe('Space Environment PATCH', () => {
 
-        it('Patch an Evironment', () => {
+        it('Patch an Environment', () => {
             return request.post('/api/spaceEnvs')
                 .send(envData[0])
                 .then(({ body: envRes }) => {
