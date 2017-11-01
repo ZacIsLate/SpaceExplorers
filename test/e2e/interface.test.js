@@ -1,49 +1,12 @@
 const assert = require('chai').assert;
 const mockInput = require('mock-stdin').stdin();
-const Interface = require('../../lib/routes/interface');
+const Game = require('../../lib/routes/interface');
+//const bddStdin = require('bdd-stdin');
 
-describe.only('Interface test',() => {
+describe('Interface test',() => {
 
-    const question = {
-        type: 'input',
-        name: 'name',
-        message: 'Hi, What is your name?'
-    };
-
-    const questions = [
-        {
-            type: 'input',
-            name: 'first name',
-            message: 'Hi, What is your first name?'
-        },
-        {
-            type: 'input',
-            name: 'last name',
-            message: 'Hi, What is your last name?'
-        }
-    ];
-    
-    it('should write a question to command line and receive a response', () => {
-        const interface = new Interface();
-        const promise = interface.askQuestions(question)
-            .then((res) => {
-                console.log('test INQ', res)
-                assert.ok(res);
-                assert.deepEqual(res.name, 'SHANE');
-            });
-        mockInput.send('SHANE\n');
-        return promise;
-    });
-
-    it.only('should write multiple questions to command line and receive a response', () => {
-        const interface = new Interface();
-        const promise = interface.askQuestions(questions)
-            .then((res) => {
-                assert.ok(res);
-                assert.deepEqual(res.name, 'SHANE');
-                assert.deepEqual(res.name, 'SHANE');
-            });
-        mockInput.send(['SHANE\n','MOYO\n']);
-        return promise;
+    it('should take a turn and report result', () => {
+        const game = new Game();
+        
     });
 });
