@@ -15,12 +15,16 @@
     "chai": "^4.1.2",
     "eslint": "^4.8.0",
     "express": "^4.16.2",
+    "inquirer": "^3.3.0",
     "jsonwebtoken": "^8.1.0",
     "mkdirp": "^0.5.1",
+    "mock-stdin": "^0.3.1",
     "mongoose": "^4.12.5",
     "morgan": "^1.9.0",
+    "prompt": "^1.0.0",
     "rimraf": "^2.6.2",
-    "shortid": "^2.2.8"
+    "shortid": "^2.2.8",
+    "terminal-kit": "^1.14.0"
   },
   "devDependencies": {
     "body-parser": "^1.18.2",
@@ -32,7 +36,7 @@
     "lint": "eslint .",
     "mocha": "mocha --recursive",
     "pretest": "npm run lint",
-    "test": "npm run mocha",
+    "test": "npm run mocha -s",
     "testU": "npm run mocha -- ./test/unit",
     "testE2E": "npm run mocha -- ./test/e2e",
     "test:dev": "nodemon --exec \"npm run mocha\"",
