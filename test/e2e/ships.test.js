@@ -98,5 +98,22 @@ describe('Ship CRUD', () => {
                 });        
         });
     });
+
+    describe('Ship PATCH', () => {
+        
+        it('Patch a ship and returns it', () => {
+            return request.post('/api/ships')
+                .send(shipData[0])
+                .then(({ body: shipRes}) => {
+                    assert.ok(shipRes._id);
+                    shipRes.name = 'Mayo';
+                    return request.patch(`/api/ships/${shipRes._id}`)
+                        .send({name: 'Mayo'})
+                        .then(({ body: updatedShip}) => {
+                            assert.deepEqual(shipRes, updatedShip);
+                        });
+                });
+        });
+    });
 });
 
