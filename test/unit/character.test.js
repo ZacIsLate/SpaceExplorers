@@ -45,7 +45,6 @@ describe( 'Character model', () => {
         });
         const { errors } = character.validateSync();
         assert.equal(errors['ship.name'].kind, 'required');
-        assert.equal(errors['currentEvent.event'].kind, 'required');
         assert.equal(errors['ship.healthPoints'].kind, 'required');
         assert.equal(errors['ship.damage'].kind, 'required');
     });
