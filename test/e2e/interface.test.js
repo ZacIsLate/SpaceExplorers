@@ -4,25 +4,21 @@ const Interface = require('../../lib/routes/interface');
 
 describe.only('Interface test',() => {
 
-    it('should write a question to the command line and receive a response', () => {
-        const interface = new Interface();
-        const promise = interface.ask('Hi, what is your name')
-            .then((res) => assert.ok(res));
-        mockInput.send('SHANE MOYO\n');
-        return promise;
-    });
+   
 
-    it('should write multiple questions to command line and receive a response', () => {
+    it.only('should write multiple questions to command line and receive a response', () => {
         const interface = new Interface();
-        const promise = interface.ask(['Hi, what is your first name?', 'What is your last name?'])
+        const question = {
+            type: 'input',
+            name: 'name',
+            message: 'Hi, What is your name?'
+        };
+        const promise = interface.askQuestions(question)
             .then((res) => {
-                console.log('i am response res', res);
                 assert.ok(res);
-                assert.deepEqual(res['Hi, what is your first name?'], 'SHANE');
-                assert.deepEqual(res['What is your last name?'], 'MOYO');
+                assert.deepEqual(res.name, 'SHANE');
             });
         mockInput.send('SHANE\n');
-        mockInput.send('MOYO\n');
         return promise;
     });
 });
