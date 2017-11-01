@@ -53,7 +53,9 @@ class Game{
                 
             });
     }
-    loadEvent(){
+    generateEvent(){
+        this.api.loadEvent()
+            .then( )
         console.log('Load an event');
     }
 }
