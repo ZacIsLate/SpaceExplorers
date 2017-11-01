@@ -99,9 +99,7 @@ describe.only('actions API', () =>{
                             description: 'human/alien travel writer',
                             user:'590643bc2cd3da2808b0e651',
                             ship: ship,
-                            log:{
-                                currentEvent: savedEvent._id,
-                            }
+                            currentEvent:{event: savedEvent._id}
                         };
                     });
                     
@@ -119,7 +117,7 @@ describe.only('actions API', () =>{
         return request.post(`/api/game/character/${savedChar._id}/actions`)
             .send({action:'attack'})
             .then( ({body}) => {
-                assert.ok(body.damage);
+                assert.ok(body);
             });
     });
 });
