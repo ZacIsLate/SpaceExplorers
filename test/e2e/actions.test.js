@@ -8,10 +8,8 @@ describe.only('actions API', () =>{
 
     let savedEnvironment = null;
     let savedEnemy = null;
-    let savedEvent = null;
     let testEvent = null;
     let savedChar= null;
-    let char = null;
 
     const ship = {
         name: 'Moya',
@@ -24,7 +22,7 @@ describe.only('actions API', () =>{
     const enemy = {
         name: 'Advanced Cylon War Raider Battalion',
         damage: 25,
-        healthPoints: 55,
+        healthPoints: 50,
     };
 
     const environment = {
@@ -87,37 +85,31 @@ describe.only('actions API', () =>{
                                 outcome: -40
                             }
                         }]
+                    
                 };
                 return request.post('/api/events')
-                    .send(testEvent)
-                    .then(got => {
-                        savedEvent = got.body;
-                    })
-                    .then( () => {
-                        char = {
-                            name: 'Ford Prefect',
-                            description: 'human/alien travel writer',
-                            user:'590643bc2cd3da2808b0e651',
-                            ship: ship,
-                            currentEvent:{event: savedEvent._id}
-                        };
-                    });
-                    
+                    .send(testEvent);
             });
     });
 
     beforeEach( () => {
         return request.post('/api/characters')
-            .send(char)
+            .send({
+                name: 'Ford Prefect',
+                description: 'human/alien travel writer',
+                user:'590643bc2cd3da2808b0e651',
+                ship: ship,
+            })
             .then( ({body}) => savedChar = body );
     });
 
 
     it('checks if route has access to current character and the event and posts an action', ()=>{
-        return request.post(`/api/game/character/${savedChar._id}/actions`)
-            .send({action:'attack'})
+        return request.get(`/api/game/character/${savedChar._id}/getEvent`)
             .then( ({body}) => {
+                console.log(body);
                 assert.ok(body);
             });
     });
 });
+// return request.post(`/api/game/character/${savedChar._id}/actions`)
