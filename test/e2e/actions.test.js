@@ -3,7 +3,7 @@ const assert = require('chai').assert;
 const db = require('./db');
 
 
-describe('actions API', () =>{
+describe.only('actions API', () =>{
     beforeEach( () => db.drop());
 
     let savedEnvironment = null;
@@ -107,17 +107,26 @@ describe('actions API', () =>{
     it('checks if getEvent is working', ()=>{
         return request.get(`/api/game/character/${savedChar._id}/getEvent`)
             .then( ({body}) => {
-                console.log(body);
+                console.log('this is what we get',body);
                 assert.ok(body);
             });
     });
 
-    // it(' checks if post action is working for attack', ()=>{
-    //     return request.get(`/api/game/character/${savedChar._id}
-    //         .then()
-    //     return request.post(`/api/game/character/${savedChar._id}/actions`)
-    //         .send({action:'attack'})
+    it.only(' checks if post action is working for attack', ()=>{
+        return request.get(`/api/game/character/${savedChar._id}/getEvent`)
+            .then( () => {
+                return request.post(`/api/game/character/${savedChar._id}/actions`)
+                    .send({action:'attack'});
+            })
+            .then( result => {
+                console.log('recieved result is:', result);
+                assert.isFalse(result.resolved);
+                assert.isFalse(result.win);
+                assert.isFalse(result.lose);
+                assert.ok(result.description);
+            });
+        
 
-    // });
+    });
 
 });
