@@ -48,5 +48,4 @@ describe( 'Character model', () => {
         assert.equal(errors['ship.healthPoints'].kind, 'required');
         assert.equal(errors['ship.damage'].kind, 'required');
     });
-
 });
