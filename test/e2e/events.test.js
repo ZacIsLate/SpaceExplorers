@@ -189,7 +189,7 @@ describe('enemy API', () => {
             .then( res => assert.deepEqual(res.body, { removed: true}));        
     });
 
-    it.only('Patch a event', () => {
+    it('Patch a event', () => {
         return request.post('/api/events')
             .send(testEvent)
             .then(({body: eventRes }) => {
