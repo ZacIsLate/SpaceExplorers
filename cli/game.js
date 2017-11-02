@@ -11,8 +11,8 @@ const authQuestions = [
     },
     {
         type: 'input',
-        name: 'email',
-        message: 'enter your email'
+        name: 'name',
+        message: 'enter your name'
     },
     {
         type: 'password',
@@ -28,11 +28,11 @@ class Game{
     }
     start(){
         inquirer.prompt(authQuestions)
-            .then(({ auth, email, password }) => this.api[auth]({email, password}))
-            .then(({ token, _id}) =>{
+            .then(({ auth, name, password }) => this.api[auth]({name, password}))
+            .then(({ token, userId}) =>{
                 lineBreak();
                 this.api.token = token;
-                this.chooseCharacter(_id);
+                this.chooseCharacter(userId);
             })
             .catch(console.log);
     }
