@@ -1,6 +1,7 @@
 [
   {
     "name": "Ellen Ripley",
+    "template": true,
     "description": "Warrant officer who survived multiple encounters with Xenomorphs",
     "currentEvent": {
       "event": {},
@@ -12,6 +13,7 @@
   },
   {
     "name": "Ford Prefect",
+    "template": true,
     "description": "human/alien travel writer",
     "currentEvent": {
       "event": {},
@@ -23,6 +25,7 @@
   },
   {
     "name": "Flash Gordon",
+    "template": true,
     "description": "human and time traveller",
     "currentEvent": {
       "event": {},
@@ -34,6 +37,7 @@
   },
   {
     "name": "Rick Deckard",
+    "template": true,
     "description": "replicant terminator",
     "currentEvent": {
       "event": {},
