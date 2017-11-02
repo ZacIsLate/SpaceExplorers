@@ -1,4 +1,6 @@
 const inquirer = require('inquirer');
+const colors = require('colors');//eslint-disable-line
+const lineBreak = () => console.log('\n\n\n\n\n');
 
 const authQuestions = [
     {
@@ -28,42 +30,57 @@ class Game{
         inquirer.prompt(authQuestions)
             .then(({ auth, email, password }) => this.api[auth]({email, password}))
             .then(({ token, _id}) =>{
+                lineBreak();
                 this.api.token = token;
                 this.chooseCharacter(_id);
             })
             .catch(console.log);
     }
-    createNewCharacter(id){
+    createNewCharacter(id) {
         this.api.getShips()
-            .then( ships => {
+            .then(ships => {
                 ships = ships.map(ship => {
-                    return {name: `${ship.name}:\n  ${ship.description}\n\n\n`, value: ship._id};
+                    return { name: `${ship.name.green.bold.underline}:  ${ship.description}`, value: ship._id };
                 });
                 return ships;
             })
-            .then( shipChoices =>{
-                return inquirer.prompt([
-                    {
-                        type: 'input',
-                        name: 'character name',
-                        message: 'enter character name'
-                    },
-                    {
-                        type: 'list',
-                        name: 'ship',
-                        message: 'Choose a ship',
-                        choices: shipChoices
-                    }
-                ]);
-            })
-            .then( answers => {
-                answers.userId = id;
-                this.api.saveCharacter(answers)
-                    .then(() => this.chooseCharacter(id));
+            .then(shipChoices => {
+                lineBreak();
+                this.api.getCharacterTemplates()
+                    .then(templates => {
+                        templates = templates.map(template => {
+                            return { name: `${template.name.green.bold.underline}:  ${template.description}`, value: template._id };
+                        });
+                        return inquirer.prompt([
+                            {
+                                type: 'list',
+                                name: 'Character choice',
+                                message: 'Choose a character',
+                                choices: templates
+                            },
+                            {
+                                type: 'list',
+                                name: 'ship',
+                                message: 'Choose a ship',
+                                choices: shipChoices
+                            }
+                        ]);
+                    })
+                    .then(answers => {
+                        answers.userId = id;
+                        this.api.char_id = answers;
+                        console.log('characterID', this.api.char_id);
+                        this.api.saveCharacter(answers)
+                            .then( save => {
+                                this.api.char_id = save;
+                                console.log('characterID', this.api.char_id);
+                                this.chooseCharacter(id);
+                            });
+                    });
             });
     }
     chooseCharacter(id){
-        process.stdout.clearLine();
+        lineBreak();
         this.api.getCharacters(id)
             .then( characters => {
                 const choices = characters.map(character => {
@@ -86,17 +103,22 @@ class Game{
             });
     }
     generateEvent(){
-        this.api.loadEvent()
+        this.api.loadEvent(this.api.char_id)
             .then( event => this.resolveEvent(event));
     }
     resolveEvent(event){
-        console.log(event.description);
+        lineBreak();
+        lineBreak();
+        console.log(event.description.yellow);
         if(event.win) console.log('You win!');
         if(event.lose) console.log('You lose!');
         if(!event.resolved){
             const chooseAction = event.prompts.map( prompt => {
                 return {value: prompt.action, name: prompt.text};
             });
+            chooseAction[0].name = chooseAction[0].name.red;
+            chooseAction[1].name = chooseAction[1].name.green;
+            chooseAction[2].name = chooseAction[2].name.blue;
             const choices = {
                 type: 'list',
                 name: 'action',
@@ -105,6 +127,7 @@ class Game{
             };
             inquirer.prompt(choices)
                 .then(choice => {
+                    choice.char_id = this.api.char_id;
                     console.log('you have chosen', choice);
                     this.api.resolveAction(choice)
                         .then(resolution => this.resolveEvent(resolution));
