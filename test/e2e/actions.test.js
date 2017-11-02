@@ -121,8 +121,5 @@ describe.only('actions API', () =>{
                 console.log('recieved result is:', body);
                 assert.ok(body.result.description);
             });
-        
-
     });
-
 });
