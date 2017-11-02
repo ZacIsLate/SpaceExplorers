@@ -52,7 +52,7 @@ class Game{
         this.api.getShips()
             .then( ships => {
                 ships.map(ship => {
-                    return {name: ship.name + '\n'+ ship.description, value: ship._id}
+                    return {name: ship.name + '\n'+ ship.description, value: ship._id};
                 });
                 return ships;
             })
@@ -71,7 +71,9 @@ class Game{
                     }
                 );
             })
-            .then()
+            .then( answers => {
+                console.log(answers);
+            });
     }
     chooseCharacter(id){
         this.api.getCharacters(id)
@@ -88,7 +90,8 @@ class Game{
                 })
                     .then(({ character }) => {
                         console.log('character', character);
-                        this.generateEvent();
+                        if( character === 'Create') this.createNewCharacter(id);
+                        else this.generateEvent();
                     });
                 
             });

@@ -1,5 +1,5 @@
 const Game = require('./game');
-const ships = require('./lib/data/ships');
+const ships = require('../lib/data/ships');
 
 const service = {
     signUp(info) {
