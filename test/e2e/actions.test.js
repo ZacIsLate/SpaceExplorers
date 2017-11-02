@@ -22,7 +22,7 @@ describe('actions API', () =>{
     const enemy = {
         name: 'Advanced Cylon War Raider Battalion',
         damage: 25,
-        healthPoints: 50,
+        healthPoints: 200,
     };
 
     const environment = {
