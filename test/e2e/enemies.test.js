@@ -83,5 +83,19 @@ describe('enemy API', () => {
             })
             .then( res => assert.deepEqual(res.body, { removed: true}));        
     });
+
+    it.only('Enemy PATCH', () => {
+        return request.post('/api/enemies')
+            .send(klingonWarbird)
+            .then(({ body: enemyRes}) => {
+                assert.ok(enemyRes._id);
+                enemyRes.name = 'Klingon War hawk';
+                return request.patch(`/api/enemies/${enemyRes._id}`)
+                    .send({ name: 'Klingon War hawk' })
+                    .then(({ body: updatedEnemy }) => {
+                        assert.deepEqual(enemyRes, updatedEnemy);
+                    });
+            });
+    });
     
 });
