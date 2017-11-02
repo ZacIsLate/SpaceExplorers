@@ -1,4 +1,5 @@
 const inquirer = require('inquirer');
+
 const authQuestions = [
     {
         type: 'list',
@@ -16,7 +17,6 @@ const authQuestions = [
         name: 'password',
         message: 'enter your password'
     }
-
 ];
 
 
@@ -36,8 +36,8 @@ class Game{
     createNewCharacter(id){
         this.api.getShips()
             .then( ships => {
-                ships.map(ship => {
-                    return {name: ship.name + '\n'+ ship.description, value: ship._id};
+                ships = ships.map(ship => {
+                    return {name: `${ship.name}:\n  ${ship.description}\n\n\n`, value: ship._id};
                 });
                 return ships;
             })
@@ -63,6 +63,7 @@ class Game{
             });
     }
     chooseCharacter(id){
+        process.stdout.clearLine();
         this.api.getCharacters(id)
             .then( characters => {
                 const choices = characters.map(character => {
@@ -109,7 +110,7 @@ class Game{
                         .then(resolution => this.resolveEvent(resolution));
                 });                   
         } else {
-            this.generateEvent()
+            this.generateEvent();
         }
     }
 }

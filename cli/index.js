@@ -3,7 +3,7 @@ const ships = require('../lib/data/ships');
 
 const savedCharacters = [{ _id: '122', name: 'joe' }, { _id: '789', name: 'dan' }, { _id: '345', name: 'sam' }];
 const spaceEvents = [
-    {
+    [{
         description: 'You have been attacked by klingons!!',
         win: false,
         lose: false,
@@ -35,9 +35,20 @@ const spaceEvents = [
             { text: 'talk it out', action: 'diplomacy' },
             { text: 'runaway', action: 'run' }
         ]
+    }],
+    [{
+        description: 'You have been attacked by the Advanced Cylon War Raider Battalion!!',
+        win: false,
+        lose: false,
+        resolved: false,
+        prompts: [
+            { text: 'Partical cannon', action: 'attack' },
+            { text: 'Negotiate', action: 'diplomacy' },
+            { text: 'Try to  escape', action: 'run' }
+        ]
     },
     {
-        description: 'You have been attacked by the Advanced Cylon War Raider Battalion!!',
+        description: 'You cannot escape the Advanced Cylon War Raider Battalion!!',
         win: false,
         lose: false,
         resolved: false,
@@ -57,20 +68,31 @@ const spaceEvents = [
             { text: 'Negotiate', action: 'diplomacy' },
             { text: 'Try to  escape', action: 'run' }
         ]
+    }],
+    [{
+        description: 'You have been attacked by Darth Maul and Count Dooku on a space station!!',
+        win: false,
+        lose: false,
+        resolved: false,
+        prompts: [
+            { text: 'Photon torpedo', action: 'attack' },
+            { text: 'beg for mercy', action: 'diplomacy' },
+            { text: 'run', action: 'run' }
+        ]
     },
     {
-        description: 'You cannot escape the Advanced Cylon War Raider Battalion!!',
+        description: 'You have escaped Count Dooku and Maul!',
         win: false,
         lose: false,
         resolved: true,
         prompts: [
-            { text: 'Partical cannon', action: 'attack' },
-            { text: 'Negotiate', action: 'diplomacy' },
-            { text: 'Try to  escape', action: 'run' }
+            { text: 'Photon torpedo', action: 'attack' },
+            { text: 'beg for mercy', action: 'diplomacy' },
+            { text: 'run', action: 'run' }
         ]
-    }
+    },
     {
-        description: 'You have encountered an Darth Maul and Count Dooku on a space station!!',
+        description: 'Darth Maul will give no mercy',
         win: false,
         lose: false,
         resolved: false,
@@ -79,19 +101,11 @@ const spaceEvents = [
             { text: 'beg for mercy', action: 'diplomacy' },
             { text: 'run', action: 'run' }
         ]
-    },
-    {
-        description: 'You have encountered an Darth Maul and Count Dooku on a space station!!',
-        win: false,
-        lose: false,
-        resolved: false,
-        prompts: [
-            { text: 'Photon torpedo', action: 'attack' },
-            { text: 'beg for mercy', action: 'diplomacy' },
-            { text: 'run', action: 'run' }
-        ]
-    },
+    }],
+    [{win: true, description: 'You have found a new home planet'}]
 ];
+let counter = -1;
+let newEvent;
 
 const service = {
     signUp(info) {
@@ -112,7 +126,7 @@ const service = {
     },
     saveCharacter(characterData){
         console.log(characterData, 'saved!');
-        const newCharacter = { _id: '445533', name: characterData['character name'] }
+        const newCharacter = { _id: '445533', name: characterData['character name'] };
         savedCharacters.push(newCharacter);
         return Promise.resolve(characterData);
     },
@@ -123,29 +137,22 @@ const service = {
     },
     loadEvent() {
         //Should return to a random event description object to the game.
-        return Promise.resolve({
-            description: 'You have been attacked by klingons!!',
-            win: false,
-            lose: false,
-            resolved: false,
-            prompts: [
-                { text: 'laser beam', action: 'attack' },
-                { text: 'talk it out', action: 'diplomacy' },
-                { text: 'runaway', action: 'run' }
-            ]
-        });
+        counter++;
+        newEvent = spaceEvents[counter];
+        return Promise.resolve(newEvent[0]);
     },
     resolveAction(option) {
         //Should return an event description object based an a provided option. 
         console.log('User choice: ', option);
-        
+    
         if (option.action === 'attack') {
-            return Promise.resolve(spaceEvents[0]);
+            return Promise.resolve(newEvent[0]);
         } else if (option.action === 'run'){
-            return Promise.resolve(spaceEvents[1]);
+            return Promise.resolve(newEvent[1]);
         } else if(option.action === 'diplomacy'){
-            return Promise.resolve(spaceEvents[2]);
+            return Promise.resolve(newEvent[2]);
         }
+
     }
 };
 
