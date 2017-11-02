@@ -85,7 +85,6 @@ describe.only('actions API', () =>{
                                 outcome: -40
                             }
                         }]
-                    
                 };
                 return request.post('/api/events')
                     .send(testEvent);
@@ -113,7 +112,7 @@ describe.only('actions API', () =>{
     });
 
     it.only(' checks if post action is working for attack', ()=>{
-        return request.get(`/api/game/character/${savedChar._id}/getEvent`)
+        return request.get(`/api/game/character/${savedChar._id}/event`)
             .then( () => {
                 return request.post(`/api/game/character/${savedChar._id}/actions`)
                     .send({action:'attack'});
