@@ -1,5 +1,5 @@
 const Game = require('./game');
-const request = require('../test/e2e/request');
+const request = require('superagent');
 
 let token = '';
 
