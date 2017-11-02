@@ -98,4 +98,21 @@ describe('SpaceEnv CRUD', () => {
                 });        
         });
     });
+
+    describe('Space Environment PATCH', () => {
+
+        it('Patch an Environment', () => {
+            return request.post('/api/spaceEnvs')
+                .send(envData[0])
+                .then(({ body: envRes }) => {
+                    assert.ok(envRes._id);
+                    envRes.name = 'Asteroid Belt';
+                    return request.patch(`/api/spaceEnvs/${envRes._id}`)
+                        .send({ name: 'Asteroid Belt' })
+                        .then(({ body: updatedEnv }) => {
+                            assert.deepEqual(envRes, updatedEnv);
+                        });
+                });
+        });
+    });
 });
