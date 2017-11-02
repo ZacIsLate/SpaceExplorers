@@ -189,4 +189,18 @@ describe('enemy API', () => {
             .then( res => assert.deepEqual(res.body, { removed: true}));        
     });
 
+    it('Patch a event', () => {
+        return request.post('/api/events')
+            .send(testEvent)
+            .then(({body: eventRes }) => {
+                assert.ok(eventRes._id);
+                eventRes.scenario = 'event has ended';
+                return request.patch(`/api/events/${eventRes._id}`)
+                    .send({ scenario: 'event has ended' })
+                    .then(({ body: updatedEvent }) => {
+                        assert.deepEqual(eventRes, updatedEvent);
+                    });
+            });
+    });
+
 });

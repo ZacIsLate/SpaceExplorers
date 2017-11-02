@@ -2,14 +2,14 @@ const request = require('./request');
 const assert = require('chai').assert;
 const db = require('./db');
 
-describe('Characters API', () => {
+
+describe('actions API', () =>{
+    beforeEach( () => db.drop());
+
     let savedEnvironment = null;
     let savedEnemy = null;
-    let savedEvent = null;
     let testEvent = null;
-    let characterData = null;
-
-    beforeEach(() => db.drop());
+    let savedChar= null;
 
     const ship = {
         name: 'Moya',
@@ -18,13 +18,13 @@ describe('Characters API', () => {
         description: 'A living sentient bio-mechanical space ship.',
         class: 'Leviathan'
     };
-
+    
     const enemy = {
         name: 'Advanced Cylon War Raider Battalion',
         damage: 25,
-        healthPoints: 55,
+        healthPoints: 50,
     };
-    
+
     const environment = {
         name: 'Astroid Field',
         damage: 25,
@@ -32,7 +32,7 @@ describe('Characters API', () => {
         globalDmg: 15
     };
 
-    beforeEach( ()=> {
+    beforeEach( () => {
         return Promise.all([
             request.post('/api/enemies')
                 .send(enemy)
@@ -87,105 +87,39 @@ describe('Characters API', () => {
                         }]
                 };
                 return request.post('/api/events')
-                    .send(testEvent)
-                    .then(got => {
-                        savedEvent = got.body;
-                    })
-                    .then( () => {
-                        characterData = [
-                            {
-                                name: 'Ford Prefect',
-                                description: 'human/alien travel writer',
-                                user:'590643bc2cd3da2808b0e651',
-                                ship: ship,
-                                currentEvent: {event: savedEvent._id}
-                            }, 
-                            {
-                                name: 'Mark Watney',
-                                description: 'Maritian - colonized a planet on his own',
-                                user:'590643bc2cd3da2808b0e651',
-                                ship: ship,
-                                currentEvent: {event: savedEvent._id}
-                            }
-                        ];
-                    });
+                    .send(testEvent);
             });
     });
 
-    it('saves a character', () => {
+    beforeEach( () => {
         return request.post('/api/characters')
-            .send(characterData[0])
-            .then(({ body }) => assert.equal(body.name, characterData[0].name));
-    }),
-
-    it('gets all characters', () => {
-        let characterCollection = characterData.map(item => {
-            return request.post('/api/characters')
-                .send(item)
-                .then(res => res.body);
-        });
-
-        let saved = null;
-        return Promise.all(characterCollection)
-            .then(_saved => {
-                saved = _saved;
-                return request.get('/api/characters');
+            .send({
+                name: 'Ford Prefect',
+                description: 'human/alien travel writer',
+                user:'590643bc2cd3da2808b0e651',
+                ship: ship,
             })
-            .then(res => {
-                assert.deepEqual(res.body, saved);
-                assert.equal(res.body[1].name, 'Mark Watney');
+            .then( ({body}) => savedChar = body );
+    });
+
+
+    it('checks if getEvent is working', ()=>{
+        return request.get(`/api/game/character/${savedChar._id}/event`)
+            .then( ({body}) => {
+                console.log('this is what we get',body);
+                assert.ok(body);
             });
-    }),
-
-    it('gets a character by id', () => {
-        let savedCharacter = null;
-        return request.post('/api/characters')
-            .send(characterData[0])
-            .then(res => {
-                savedCharacter = res.body;
-            })
-            .then(() => {
-                return request.get(`/api/characters/${savedCharacter._id}`);
-            
-            })
-            .then(res => assert.equal(res.body.name, 'Ford Prefect'));
     });
 
-    it('Should update a character', ()=>{
-        let savedCharacter = null; 
-        return request.post('/api/characters')
-            .send(characterData[0])
-            .then( res => {
-                savedCharacter = res.body;
-                characterData[0].name = 'Helena Cain';
-                return request.put(`/api/characters/${savedCharacter._id}`)
-                    .send(characterData[0]);
+    it(' checks if post action is working for attack', ()=>{
+        return request.get(`/api/game/character/${savedChar._id}/event`)
+            .then( () => {
+                return request.post(`/api/game/character/${savedChar._id}/actions`)
+                    .send({action:'attack'});
             })
-            .then(res => assert.deepEqual(res.body.nModified === 1, true));
-    });
-
-    it('Deletes Character by ID', () =>{
-        let savedCharacter = null;
-        return request.post('/api/characters')
-            .send(characterData[0])
-            .then(res => {
-                savedCharacter = res.body;
-                return request.delete(`/api/characters/${savedCharacter._id}`);
-            })
-            .then( res => assert.deepEqual(res.body, { removed: true}));   
-    });
-
-    it('Patch a character by id', () => {
-        return request.post('/api/characters')
-            .send(characterData[0])
-            .then(({ body: charRes }) => {
-                assert.ok(charRes._id);
-                charRes.name = 'Fluffy';
-                return request.patch(`/api/characters/${charRes._id}`)
-                    .send({ name: 'Fluffy' })
-                    .then(({ body: updatedChar }) => {
-                        assert.deepEqual(charRes, updatedChar);
-                    });
+            .then( ({body}) => {
+                console.log('recieved result is:', body);
+                assert.ok(body.result.description);
             });
     });
 });
