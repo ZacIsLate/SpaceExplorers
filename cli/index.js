@@ -14,7 +14,8 @@ const service = {
     },
     getShips(){
         return Promise.resolve(ships.map( ship => {
-            return {}
+            ship._id = `123${ship.name}122345`;
+            return ship;
         }));
     },
     getCharacters(userId) {

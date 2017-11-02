@@ -47,7 +47,17 @@ class Game{
             .catch(console.log);
     }
     createNewCharacter(id){
-        this.api.getShips();
+
+        this.api.getShips()
+            .then( ships => {
+                ships.map
+            })
+            {
+                type: 'list',
+                name: 'auth',
+                message: 'Do you want to sign in or sign up?',
+                choices: [{name: 'Sign in', value: 'signIn' },{name:'Sign up', value: 'signUp'}]
+            }
 
     }
     chooseCharacter(id){
