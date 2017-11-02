@@ -15,11 +15,13 @@ describe( 'Character model', () => {
                 class: 'Leviathan'
             },
             user: '590643bc2cd3da2808b0e651',
-            log: {
-                currentEvent:'590643bc2cd3da2808b0e651',
-                allEvents:'590643bc2cd3da2808b0e651'
-            }
+            currentEvent:{
+                event:'590643bc2cd3da2808b0e651',
+                enemy:{},
+            },
+            log:[{event:'590643bc2cd3da2808b0e651'}]
         });
+        console.log('errors are',character.validateSync());
         assert.equal(character.validateSync(), undefined);
     });
 
@@ -40,11 +42,9 @@ describe( 'Character model', () => {
                 description: 'A living sentient bio-mechanical space ship.',
                 class: 'Leviathan'
             },
-            log: ['badid']
         });
         const { errors } = character.validateSync();
         assert.equal(errors['ship.name'].kind, 'required');
-        assert.equal(errors['log.currentEvent'].kind, 'required');
         assert.equal(errors['ship.healthPoints'].kind, 'required');
         assert.equal(errors['ship.damage'].kind, 'required');
     });
