@@ -40,7 +40,7 @@ const service = {
             .set('Authorization', token)
             .then(({body}) =>{
                 console.log('we got body from get charecters', body);
-                return body.userRes;
+                return body;
             });
         //Should return to the game an array of objects containing all characters corresponding to the userId.
     },

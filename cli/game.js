@@ -83,9 +83,13 @@ class Game{
         lineBreak();
         this.api.getCharacters(id)
             .then( characters => {
-                const choices = characters.map(character => {
-                    return {value: character._id, name: character.name};
-                });
+                console.log('should be null here:', characters);
+                let choices = [];
+                if(characters){
+                    choices = characters.map(character => {
+                        return {value: character._id, name: character.name};
+                    });
+                }
                 choices.push(new inquirer.Separator());
                 choices.push({value: 'Create', name: 'Create a new character'});
                 inquirer.prompt({
