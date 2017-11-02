@@ -19,19 +19,6 @@ const authQuestions = [
 
 ];
 
-const characterQuestions =[
-    {
-        type: 'input',
-        name: 'character name',
-        message: 'enter character name'
-    },
-    {
-        type: 'password',
-        name: 'password',
-        message: 'enter your password'
-    }
-];
-
 
 class Game{
     constructor(api){
@@ -47,8 +34,6 @@ class Game{
             .catch(console.log);
     }
     createNewCharacter(id){
-        
-
         this.api.getShips()
             .then( ships => {
                 ships.map(ship => {
@@ -57,7 +42,7 @@ class Game{
                 return ships;
             })
             .then( shipChoices =>{
-                return inquirer.prompt(
+                return inquirer.prompt([
                     {
                         type: 'input',
                         name: 'character name',
@@ -69,10 +54,13 @@ class Game{
                         message: 'Choose a ship',
                         choices: shipChoices
                     }
-                );
+                ]);
             })
             .then( answers => {
                 console.log(answers);
+                answers.userId = id;
+                this.api.saveNewCharacter(answers)
+                    .then(() => this.chooseCharacter(id));
             });
     }
     chooseCharacter(id){
@@ -81,6 +69,7 @@ class Game{
                 const choices = characters.map(character => {
                     return {value: character._id, name: character.name};
                 });
+                choices.push(new inquirer.Separator());
                 choices.push({value: 'Create', name: 'Create a new character'});
                 inquirer.prompt({
                     type: 'list',

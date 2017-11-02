@@ -18,6 +18,9 @@ const service = {
             return ship;
         }));
     },
+    saveCharacter(characterData){
+        console.log(characterData, 'saved!')
+    },
     getCharacters(userId) {
         //Should return to the game an array of objects containing all characters corresponding to the userId.
         console.log('Characters stored under this user: ', userId);
