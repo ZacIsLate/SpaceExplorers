@@ -9,6 +9,7 @@ const service = {
         return request.post(`${API_URL}/auth/signup`)
             .send(info)
             .then(({body}) => {
+                token = body.token;
                 console.log('we got body back', body);
                 return body;
             });
@@ -25,13 +26,16 @@ const service = {
             .then( res => res.body );
     },
     saveCharacter(characterData){
-        return request.post(`${API_URL}/newcharacter/${characterData._id}`)
+        console.log('save char with this id',characterData['Character choice']);
+        return request.post(`${API_URL}/newChar/${characterData['Character choice']}`)
+            .set('Authorization', token)
             .send(characterData)
             .then(({ body: charId}) => charId);
     },
     getCharacterTemplates() {
         console.log('we got to charecter Templates');
         return request.get(`${API_URL}/characters`)
+            .set('Authorization', token)
             .then(({ body: newChar}) => newChar);
     },
     getCharacters(userId) {

@@ -73,7 +73,7 @@ class Game{
                         this.api.saveCharacter(answers)
                             .then( save => {
                                 this.api.char_id = save;
-                                console.log('characterID', this.api.char_id);
+                                console.log('got here with characterID', this.api.char_id);
                                 this.chooseCharacter(id);
                             });
                     });
