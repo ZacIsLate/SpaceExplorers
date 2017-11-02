@@ -21,7 +21,6 @@ describe( 'Character model', () => {
             },
             log:[{event:'590643bc2cd3da2808b0e651'}]
         });
-        console.log('errors are',character.validateSync());
         assert.equal(character.validateSync(), undefined);
     });
 
