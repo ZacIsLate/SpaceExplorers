@@ -1,6 +1,8 @@
 const Game = require('./game');
 const ships = require('../lib/data/ships');
 
+const savedCharacters = [{ _id: '122', name: 'joe' }, { _id: '789', name: 'dan' }, { _id: '345', name: 'sam' }];
+
 const service = {
     signUp(info) {
         //Should post a new user and return to game object with id and token property.
@@ -19,12 +21,15 @@ const service = {
         }));
     },
     saveCharacter(characterData){
-        console.log(characterData, 'saved!')
+        console.log(characterData, 'saved!');
+        const newCharacter = { _id: '445533', name: characterData['character name'] }
+        savedCharacters.push(newCharacter);
+        return Promise.resolve(characterData);
     },
     getCharacters(userId) {
         //Should return to the game an array of objects containing all characters corresponding to the userId.
         console.log('Characters stored under this user: ', userId);
-        return Promise.resolve([{ _id: '122', name: 'joe' }, { _id: '789', name: 'dan' }, { _id: '345', name: 'sam' }]);
+        return Promise.resolve(savedCharacters);
     },
     loadEvent() {
         //Should return to a random event description object to the game.

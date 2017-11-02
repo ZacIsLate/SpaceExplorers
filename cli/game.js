@@ -59,7 +59,7 @@ class Game{
             .then( answers => {
                 console.log(answers);
                 answers.userId = id;
-                this.api.saveNewCharacter(answers)
+                this.api.saveCharacter(answers)
                     .then(() => this.chooseCharacter(id));
             });
     }
