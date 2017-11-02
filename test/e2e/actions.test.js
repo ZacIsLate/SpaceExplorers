@@ -105,13 +105,13 @@ describe('actions API', () =>{
 
     it('checks if getEvent is working', ()=>{
         return request.get(`/api/game/character/${savedChar._id}/event`)
-            .then( ({body}) => {
-                console.log('this is what we get',body);
-                assert.ok(body);
+            .then( (got) => {
+                console.log('this is what we get',got.body);
+                assert.ok(got);
             });
     });
 
-    it(' checks if post action is working for attack', ()=>{
+    it.only(' checks if post action is working for attack', ()=>{
         return request.get(`/api/game/character/${savedChar._id}/event`)
             .then( () => {
                 return request.post(`/api/game/character/${savedChar._id}/actions`)
