@@ -1,5 +1,5 @@
 const inquirer = require('inquirer');
-const colors = require('colors');
+const colors = require('colors');//eslint-disable-line
 const lineBreak = () => console.log('\n\n\n\n\n');
 
 const authQuestions = [
