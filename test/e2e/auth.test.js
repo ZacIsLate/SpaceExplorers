@@ -9,11 +9,12 @@ describe('Authentication API', () => {
 
     beforeEach( ()=> {
         return request.post('/api/auth/signup')
-            .send({name: 'Tester', password: '007'})
+            .send({name: 'Tester', password: '007', Characters: ['59fa5438b894ff3f420b2206']})
             .then( ({body}) => {
                 token = body.token;
             });
     });
+
 
     it('should give a token on signup', () => {
         assert.ok(token);
@@ -44,7 +45,10 @@ describe('Authentication API', () => {
     it('should sign in with the same credentials',() => {
         return request.post('/api/auth/signin')
             .send({ name:'Tester', password:'007'})
-            .then( ({ body }) => assert.ok(body.token));
+            .then( ({ body }) => {
+                assert.ok(body.token);
+                assert.ok(body.userChars);
+            });
     });
 
     it('cant sign in with wrong credentials',() => {
