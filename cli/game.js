@@ -4,7 +4,7 @@ const authQuestions = [
         type: 'list',
         name: 'auth',
         message: 'Do you want to sign in or sign up?',
-        choices: [{name: 'Sign in', value: 'signIn' },{name:'Sign up', value: 'signUp'}],
+        choices: [{name: 'Sign in', value: 'signIn' },{name:'Sign up', value: 'signUp'}]
     },
     {
         type: 'input',
@@ -18,25 +18,22 @@ const authQuestions = [
     }
 
 ];
-//controls flow of the game based on results obtained from api. 
+
 class Game{
     constructor(api){
         this.api = api;
     }
     start(){
         inquirer.prompt(authQuestions)
-            .then( ({ auth, email, password }) => {
-                return this.api[auth]({email, password});
-            })
+            .then(({ auth, email, password }) => this.api[auth]({email, password}))
             .then(({ token, _id}) =>{
                 this.api.token = token;
-                if(!_id) this.chooseCharacter();
-                else this.loadEvent();
+                this.chooseCharacter(_id);
             })
             .catch(console.log);
     }
-    chooseCharacter(){
-        this.api.getCharacters()
+    chooseCharacter(id){
+        this.api.getCharacters(id)
             .then( characters => {
                 const choices = characters.map(character => {
                     return {value: character._id, name: character.name};
@@ -49,14 +46,38 @@ class Game{
                 })
                     .then(({ character }) => {
                         console.log('character', character);
+                        this.generateEvent();
                     });
                 
             });
     }
     generateEvent(){
         this.api.loadEvent()
-            .then( )
-        console.log('Load an event');
+            .then( event => this.resolveEvent(event));
+    }
+    resolveEvent(event){
+        console.log(event.description);
+        if(event.win) console.log('You win!');
+        if(event.lose) console.log('You lose!');
+        if(!event.resolved){
+            const chooseAction = event.prompts.map( prompt => {
+                return {value: prompt.action, name: prompt.text};
+            });
+            const choices = {
+                type: 'list',
+                name: 'action',
+                message: 'Choose an action',
+                choices: chooseAction,
+            };
+            inquirer.prompt(choices)
+                .then(choice => {
+                    console.log('you have chosen', choice);
+                    this.api.resolveAction(choice)
+                        .then(resolution => this.resolveEvent(resolution));
+                });                   
+        } else {
+            this.generateEvent()
+        }
     }
 }
 
