@@ -1,4 +1,6 @@
 const inquirer = require('inquirer');
+const colors = require('colors');
+const lineBreak = () => console.log('\n\n\n\n\n');
 
 const authQuestions = [
     {
@@ -28,6 +30,7 @@ class Game{
         inquirer.prompt(authQuestions)
             .then(({ auth, email, password }) => this.api[auth]({email, password}))
             .then(({ token, _id}) =>{
+                lineBreak();
                 this.api.token = token;
                 this.chooseCharacter(_id);
             })
@@ -37,11 +40,12 @@ class Game{
         this.api.getShips()
             .then( ships => {
                 ships = ships.map(ship => {
-                    return {name: `${ship.name}:\n  ${ship.description}\n\n\n`, value: ship._id};
+                    return {name: `${ship.name.green.bold.underline}:  ${ship.description}`, value: ship._id};
                 });
                 return ships;
             })
             .then( shipChoices =>{
+                lineBreak();
                 return inquirer.prompt([
                     {
                         type: 'input',
@@ -52,6 +56,7 @@ class Game{
                         type: 'list',
                         name: 'ship',
                         message: 'Choose a ship',
+                        //paginated: true,
                         choices: shipChoices
                     }
                 ]);
@@ -63,7 +68,7 @@ class Game{
             });
     }
     chooseCharacter(id){
-        process.stdout.clearLine();
+        lineBreak();
         this.api.getCharacters(id)
             .then( characters => {
                 const choices = characters.map(character => {
@@ -90,13 +95,18 @@ class Game{
             .then( event => this.resolveEvent(event));
     }
     resolveEvent(event){
-        console.log(event.description);
+        lineBreak();
+        lineBreak();
+        console.log(event.description.yellow);
         if(event.win) console.log('You win!');
         if(event.lose) console.log('You lose!');
         if(!event.resolved){
             const chooseAction = event.prompts.map( prompt => {
                 return {value: prompt.action, name: prompt.text};
             });
+            chooseAction[0].name = chooseAction[0].name.red;
+            chooseAction[1].name = chooseAction[1].name.green;
+            chooseAction[2].name = chooseAction[2].name.blue;
             const choices = {
                 type: 'list',
                 name: 'action',
