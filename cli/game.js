@@ -19,6 +19,10 @@ const authQuestions = [
 
 ];
 
+const characterQuestions =[
+    
+]
+
 
 class Game{
     constructor(api){
@@ -33,13 +37,16 @@ class Game{
             })
             .catch(console.log);
     }
+    createNewCharacter(id){
+
+    }
     chooseCharacter(id){
         this.api.getCharacters(id)
             .then( characters => {
                 const choices = characters.map(character => {
                     return {value: character._id, name: character.name};
                 });
-                choices.push({value: 'Create', name: 'Create a new Character'});
+                choices.push({value: 'Create', name: 'Create a new character'});
                 inquirer.prompt({
                     type: 'list',
                     name: 'character',
