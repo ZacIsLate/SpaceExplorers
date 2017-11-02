@@ -174,4 +174,18 @@ describe('Characters API', () => {
             })
             .then( res => assert.deepEqual(res.body, { removed: true}));   
     });
+
+    it('Patch a character by id', () => {
+        return request.post('/api/characters')
+            .send(characterData[0])
+            .then(({ body: charRes }) => {
+                assert.ok(charRes._id);
+                charRes.name = 'Fluffy';
+                return request.patch(`/api/characters/${charRes._id}`)
+                    .send({ name: 'Fluffy' })
+                    .then(({ body: updatedChar }) => {
+                        assert.deepEqual(charRes, updatedChar);
+                    });
+            });
+    });
 });

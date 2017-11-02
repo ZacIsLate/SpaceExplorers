@@ -37,9 +37,9 @@
     "test": "npm run mocha",
     "testU": "npm run mocha -- ./test/unit",
     "testE2E": "npm run mocha -- ./test/e2e",
-    "test:dev": "nodemon --exec \"npm run mocha\"",
-    "test:unit": "nodemon --exec \"npm run mocha -- ./test/unit\"",
-    "test:e2e": "nodemon --exec \"npm run mocha -- ./test/e2e\"",
+    "test:dev": "nodemon --exec \"npm run mocha\" -s",
+    "test:unit": "nodemon --exec \"npm run mocha -s -- ./test/unit\"",
+    "test:e2e": "nodemon --exec \"npm run mocha -s -- ./test/e2e\"",
     "start": "node server.js",
     "start:dev": "nodemon server.js"
   },
