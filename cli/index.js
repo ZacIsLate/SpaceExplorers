@@ -1,4 +1,6 @@
 const Game = require('./game');
+const ships = require('./lib/data/ships');
+
 const service = {
     signUp(info) {
         //Should post a new user and return to game object with id and token property.
@@ -9,6 +11,11 @@ const service = {
         //Should get a user from the database and return an object to the id and token property.
         console.log('Guest would like to sign in with: ', info);
         return Promise.resolve({ _id: '123', token: 'abc' });
+    },
+    getShips(){
+        return Promise.resolve(ships.map( ship => {
+            return {}
+        }));
     },
     getCharacters(userId) {
         //Should return to the game an array of objects containing all characters corresponding to the userId.
