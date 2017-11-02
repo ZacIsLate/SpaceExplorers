@@ -4,7 +4,7 @@ const db = require('./db');
 
 
 
-describe.only('newChar API', () =>{
+describe('newChar API', () =>{
     beforeEach( () => db.drop());
     let token = null;
     let char = null;
