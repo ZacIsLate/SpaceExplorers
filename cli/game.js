@@ -11,8 +11,8 @@ const authQuestions = [
     },
     {
         type: 'input',
-        name: 'email',
-        message: 'enter your email'
+        name: 'name',
+        message: 'enter your name'
     },
     {
         type: 'password',
@@ -28,11 +28,11 @@ class Game{
     }
     start(){
         inquirer.prompt(authQuestions)
-            .then(({ auth, email, password }) => this.api[auth]({email, password}))
-            .then(({ token, _id}) =>{
+            .then(({ auth, name, password }) => this.api[auth]({name, password}))
+            .then(({ token, userId}) =>{
                 lineBreak();
                 this.api.token = token;
-                this.chooseCharacter(_id);
+                this.chooseCharacter(userId);
             })
             .catch(console.log);
     }
@@ -73,7 +73,7 @@ class Game{
                         this.api.saveCharacter(answers)
                             .then( save => {
                                 this.api.char_id = save;
-                                console.log('characterID', this.api.char_id);
+                                console.log('got here with characterID', this.api.char_id);
                                 this.chooseCharacter(id);
                             });
                     });
@@ -83,9 +83,13 @@ class Game{
         lineBreak();
         this.api.getCharacters(id)
             .then( characters => {
-                const choices = characters.map(character => {
-                    return {value: character._id, name: character.name};
-                });
+                console.log('should be null here:', characters);
+                let choices = [];
+                if(characters){
+                    choices = characters.map(character => {
+                        return {value: character._id, name: character.name};
+                    });
+                }
                 choices.push(new inquirer.Separator());
                 choices.push({value: 'Create', name: 'Create a new character'});
                 inquirer.prompt({
