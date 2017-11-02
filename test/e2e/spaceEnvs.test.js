@@ -51,8 +51,8 @@ describe('SpaceEnv CRUD', () => {
                     });
                     return request.get('/api/spaceEnvs')
                         .then(received => {
-                            assert.deepInclude(received.body, resArray[0]);
-                            assert.deepInclude(received.body, resArray[1]);
+                            assert.deepEqual(received.body[0].name, resArray[0].name);
+                            assert.deepEqual(received.body[1].name, resArray[1].name);
                         });
                 });
         });
