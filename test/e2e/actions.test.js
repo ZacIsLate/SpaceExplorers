@@ -106,7 +106,6 @@ describe('actions API', () =>{
     it('checks if getEvent is working', ()=>{
         return request.get(`/api/game/character/${savedChar._id}/event`)
             .then( (got) => {
-                console.log('this is what we get',got.body);
                 assert.ok(got);
             });
     });
@@ -118,7 +117,6 @@ describe('actions API', () =>{
                     .send({action:'attack'});
             })
             .then( ({body}) => {
-                console.log('recieved result is:', body);
                 assert.ok(body.result.description);
             });
     });

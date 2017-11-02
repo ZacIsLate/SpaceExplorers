@@ -7,7 +7,6 @@ describe('Authentication API', () => {
     beforeEach( () =>db.drop());
     let token = null;
     let char = null;
-    let userChar = null;
     beforeEach( () => {
         const ship = {
             name: 'Moya',
@@ -30,18 +29,16 @@ describe('Authentication API', () => {
 
     beforeEach( ()=> {
         return request.post('/api/auth/signup')
-            .send({name: 'Tester', password: '007'})
+            .send({name: 'Tester', password: '007', Characters: ['59fa5438b894ff3f420b2206']})
             .then( ({body}) => {
                 token = body.token;
             })
             .then( ()=>{
                 return request.post(`/api/newChar/${char._id}`)
-                    .set('Authorization', token)
-                    .then( (got) => {
-                        userChar =got;
-                    });
+                    .set('Authorization', token);
             });
     });
+
 
     it('should give a token on signup', () => {
         assert.ok(token);
@@ -69,10 +66,13 @@ describe('Authentication API', () => {
             );
     });
 
-    it.only('should sign in with the same credentials',() => {
+    it('should sign in with the same credentials',() => {
         return request.post('/api/auth/signin')
             .send({ name:'Tester', password:'007'})
-            .then( ({ body }) => assert.ok(body.token));
+            .then( ({ body }) => {
+                assert.ok(body.token);
+                assert.ok(body.userChars);
+            });
     });
 
     it('cant sign in with wrong credentials',() => {
