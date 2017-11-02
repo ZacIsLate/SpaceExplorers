@@ -20,8 +20,17 @@ const authQuestions = [
 ];
 
 const characterQuestions =[
-    
-]
+    {
+        type: 'input',
+        name: 'character name',
+        message: 'enter character name'
+    },
+    {
+        type: 'password',
+        name: 'password',
+        message: 'enter your password'
+    }
+];
 
 
 class Game{
@@ -38,6 +47,7 @@ class Game{
             .catch(console.log);
     }
     createNewCharacter(id){
+        this.api.getShips();
 
     }
     chooseCharacter(id){
