@@ -117,12 +117,9 @@ describe.only('actions API', () =>{
                 return request.post(`/api/game/character/${savedChar._id}/actions`)
                     .send({action:'attack'});
             })
-            .then( result => {
-                console.log('recieved result is:', result);
-                assert.isFalse(result.resolved);
-                assert.isFalse(result.win);
-                assert.isFalse(result.lose);
-                assert.ok(result.description);
+            .then( ({body}) => {
+                console.log('recieved result is:', body);
+                assert.ok(body.result.description);
             });
         
 
