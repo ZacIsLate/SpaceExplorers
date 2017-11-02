@@ -19,6 +19,7 @@ const authQuestions = [
 
 ];
 
+
 class Game{
     constructor(api){
         this.api = api;
@@ -38,6 +39,7 @@ class Game{
                 const choices = characters.map(character => {
                     return {value: character._id, name: character.name};
                 });
+                choices.push({value: 'Create', name: 'Create a new Character'});
                 inquirer.prompt({
                     type: 'list',
                     name: 'character',
