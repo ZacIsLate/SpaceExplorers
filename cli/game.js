@@ -36,35 +36,47 @@ class Game{
             })
             .catch(console.log);
     }
-    createNewCharacter(id){
+    createNewCharacter(id) {
         this.api.getShips()
-            .then( ships => {
+            .then(ships => {
                 ships = ships.map(ship => {
-                    return {name: `${ship.name.green.bold.underline}:  ${ship.description}`, value: ship._id};
+                    return { name: `${ship.name.green.bold.underline}:  ${ship.description}`, value: ship._id };
                 });
                 return ships;
             })
-            .then( shipChoices =>{
+            .then(shipChoices => {
                 lineBreak();
-                return inquirer.prompt([
-                    {
-                        type: 'input',
-                        name: 'character name',
-                        message: 'enter character name'
-                    },
-                    {
-                        type: 'list',
-                        name: 'ship',
-                        message: 'Choose a ship',
-                        //paginated: true,
-                        choices: shipChoices
-                    }
-                ]);
-            })
-            .then( answers => {
-                answers.userId = id;
-                this.api.saveCharacter(answers)
-                    .then(() => this.chooseCharacter(id));
+                this.api.getCharacterTemplates()
+                    .then(templates => {
+                        templates = templates.map(template => {
+                            return { name: `${template.name.green.bold.underline}:  ${template.description}`, value: template._id };
+                        });
+                        return inquirer.prompt([
+                            {
+                                type: 'list',
+                                name: 'Character choice',
+                                message: 'Choose a character',
+                                choices: templates
+                            },
+                            {
+                                type: 'list',
+                                name: 'ship',
+                                message: 'Choose a ship',
+                                choices: shipChoices
+                            }
+                        ]);
+                    })
+                    .then(answers => {
+                        answers.userId = id;
+                        this.api.char_id = answers;
+                        console.log('characterID', this.api.char_id);
+                        this.api.saveCharacter(answers)
+                            .then( save => {
+                                this.api.char_id = save;
+                                console.log('characterID', this.api.char_id);
+                                this.chooseCharacter(id);
+                            });
+                    });
             });
     }
     chooseCharacter(id){
@@ -91,7 +103,7 @@ class Game{
             });
     }
     generateEvent(){
-        this.api.loadEvent()
+        this.api.loadEvent(this.api.char_id)
             .then( event => this.resolveEvent(event));
     }
     resolveEvent(event){
@@ -115,6 +127,7 @@ class Game{
             };
             inquirer.prompt(choices)
                 .then(choice => {
+                    choice.char_id = this.api.char_id;
                     console.log('you have chosen', choice);
                     this.api.resolveAction(choice)
                         .then(resolution => this.resolveEvent(resolution));

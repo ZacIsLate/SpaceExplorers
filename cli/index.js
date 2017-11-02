@@ -2,6 +2,11 @@ const Game = require('./game');
 const ships = require('../lib/data/ships');
 
 const savedCharacters = [{ _id: '122', name: 'joe' }, { _id: '789', name: 'dan' }, { _id: '345', name: 'sam' }];
+const templateCharacters = [
+    { _id: '122', name: 'joe', description: 'i am joe'}, 
+    { _id: '789', name: 'dan', description: 'i am dan' }, 
+    { _id: '345', name: 'sam', description: 'i am sam'}
+];
 const spaceEvents = [
     [{
         description: 'You have been attacked by klingons!!',
@@ -129,6 +134,9 @@ const service = {
         const newCharacter = { _id: '445533', name: characterData['character name'] };
         savedCharacters.push(newCharacter);
         return Promise.resolve(characterData);
+    },
+    getCharacterTemplates(){
+        return Promise.resolve(templateCharacters);
     },
     getCharacters(userId) {
         //Should return to the game an array of objects containing all characters corresponding to the userId.
