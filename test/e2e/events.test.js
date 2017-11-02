@@ -196,7 +196,7 @@ describe('enemy API', () => {
                 assert.ok(eventRes._id);
                 eventRes.scenario = 'event has ended';
                 return request.patch(`/api/events/${eventRes._id}`)
-                    .send({ name: 'event has ended' })
+                    .send({ scenario: 'event has ended' })
                     .then(({ body: updatedEvent }) => {
                         assert.deepEqual(eventRes, updatedEvent);
                     });
