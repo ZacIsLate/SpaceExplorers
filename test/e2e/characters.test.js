@@ -98,18 +98,14 @@ describe('Characters API', () => {
                                 description: 'human/alien travel writer',
                                 user:'590643bc2cd3da2808b0e651',
                                 ship: ship,
-                                log:{
-                                    currentEvent: savedEvent._id,
-                                }
+                                currentEvent: {event: savedEvent._id}
                             }, 
                             {
                                 name: 'Mark Watney',
                                 description: 'Maritian - colonized a planet on his own',
                                 user:'590643bc2cd3da2808b0e651',
                                 ship: ship,
-                                log:{
-                                    currentEvent: savedEvent._id,
-                                }
+                                currentEvent: {event: savedEvent._id}
                             }
                         ];
                     });
