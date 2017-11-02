@@ -47,18 +47,31 @@ class Game{
             .catch(console.log);
     }
     createNewCharacter(id){
+        
 
         this.api.getShips()
             .then( ships => {
-                ships.map
+                ships.map(ship => {
+                    return {name: ship.name + '\n'+ ship.description, value: ship._id}
+                });
+                return ships;
             })
-            {
-                type: 'list',
-                name: 'auth',
-                message: 'Do you want to sign in or sign up?',
-                choices: [{name: 'Sign in', value: 'signIn' },{name:'Sign up', value: 'signUp'}]
-            }
-
+            .then( shipChoices =>{
+                return inquirer.prompt(
+                    {
+                        type: 'input',
+                        name: 'character name',
+                        message: 'enter character name'
+                    },
+                    {
+                        type: 'list',
+                        name: 'ship',
+                        message: 'Choose a ship',
+                        choices: shipChoices
+                    }
+                );
+            })
+            .then()
     }
     chooseCharacter(id){
         this.api.getCharacters(id)
