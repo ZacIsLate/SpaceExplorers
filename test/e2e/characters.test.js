@@ -13,23 +13,23 @@ describe('Characters API', () => {
 
     const ship = {
         name: 'Moya',
-        healthPoints: 1000,
-        damage: 100,
+        healthPoints: 300,
+        damage: 25,
         description: 'A living sentient bio-mechanical space ship.',
         class: 'Leviathan'
     };
 
     const enemy = {
         name: 'Advanced Cylon War Raider Battalion',
-        damage: 25,
-        healthPoints: 55,
+        damage: 15,
+        healthPoints: 50,
     };
     
     const environment = {
-        name: 'Astroid Field',
-        damage: 25,
+        name: 'Asteroid Field',
+        damage: 40,
         description: 'The asteroid belt is the circumstellar disc in the Solar System located roughly between the orbits of the planets Mars and Jupiter. It is occupied by numerous irregularly shaped bodies called asteroids or minor planets.',
-        globalDmg: 15
+        globalDmg: 30
     };
 
     beforeEach( ()=> {
@@ -102,7 +102,7 @@ describe('Characters API', () => {
                             }, 
                             {
                                 name: 'Mark Watney',
-                                description: 'Maritian - colonized a planet on his own',
+                                description: 'Martian - colonized a planet on his own',
                                 user:'590643bc2cd3da2808b0e651',
                                 ship: ship,
                                 currentEvent: {event: savedEvent._id}
