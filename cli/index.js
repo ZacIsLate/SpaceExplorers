@@ -15,7 +15,7 @@ const spaceEvents = [
         ]
     },
     {
-        description: 'You have been attacked by klingons!!',
+        description: 'You have escaped from the klingons!!',
         win: false,
         lose: false,
         resolved: true,
@@ -26,7 +26,18 @@ const spaceEvents = [
         ]
     },
     {
-        description: 'You have encountered an Advanced Cylon War Raider Battalion!!',
+        description: 'Klingons will not negotiate, you have been attacked!!',
+        win: false,
+        lose: false,
+        resolved: false,
+        prompts: [
+            { text: 'laser beam', action: 'attack' },
+            { text: 'talk it out', action: 'diplomacy' },
+            { text: 'runaway', action: 'run' }
+        ]
+    },
+    {
+        description: 'You have been attacked by the Advanced Cylon War Raider Battalion!!',
         win: false,
         lose: false,
         resolved: false,
@@ -37,7 +48,7 @@ const spaceEvents = [
         ]
     },
     {
-        description: 'You have encountered an Advanced Cylon War Raider Battalion!!',
+        description: 'You have succesfully negotiated with the Advanced Cylon War Raider Battalion!!',
         win: false,
         lose: false,
         resolved: true,
@@ -45,6 +56,39 @@ const spaceEvents = [
             { text: 'Partical cannon', action: 'attack' },
             { text: 'Negotiate', action: 'diplomacy' },
             { text: 'Try to  escape', action: 'run' }
+        ]
+    },
+    {
+        description: 'You cannot escape the Advanced Cylon War Raider Battalion!!',
+        win: false,
+        lose: false,
+        resolved: true,
+        prompts: [
+            { text: 'Partical cannon', action: 'attack' },
+            { text: 'Negotiate', action: 'diplomacy' },
+            { text: 'Try to  escape', action: 'run' }
+        ]
+    }
+    {
+        description: 'You have encountered an Darth Maul and Count Dooku on a space station!!',
+        win: false,
+        lose: false,
+        resolved: false,
+        prompts: [
+            { text: 'Photon torpedo', action: 'attack' },
+            { text: 'beg for mercy', action: 'diplomacy' },
+            { text: 'run', action: 'run' }
+        ]
+    },
+    {
+        description: 'You have encountered an Darth Maul and Count Dooku on a space station!!',
+        win: false,
+        lose: false,
+        resolved: false,
+        prompts: [
+            { text: 'Photon torpedo', action: 'attack' },
+            { text: 'beg for mercy', action: 'diplomacy' },
+            { text: 'run', action: 'run' }
         ]
     },
 ];
@@ -94,30 +138,13 @@ const service = {
     resolveAction(option) {
         //Should return an event description object based an a provided option. 
         console.log('User choice: ', option);
+        
         if (option.action === 'attack') {
-            return Promise.resolve({
-                description: 'You have been attacked by klingons!!',
-                win: false,
-                lose: false,
-                resolved: false,
-                prompts: [
-                    { text: 'laser beam', action: 'attack' },
-                    { text: 'talk it out', action: 'diplomacy' },
-                    { text: 'runaway', action: 'run' }
-                ]
-            });
-        } else {
-            return Promise.resolve({
-                description: 'You have been attacked by klingons!!',
-                win: false,
-                loose: false,
-                resolved: true,
-                prompts: [
-                    { text: 'laser beam', action: 'attack' },
-                    { text: 'talk it out', action: 'diplomacy' },
-                    { text: 'runaway', action: 'run' }
-                ]
-            });
+            return Promise.resolve(spaceEvents[0]);
+        } else if (option.action === 'run'){
+            return Promise.resolve(spaceEvents[1]);
+        } else if(option.action === 'diplomacy'){
+            return Promise.resolve(spaceEvents[2]);
         }
     }
 };
