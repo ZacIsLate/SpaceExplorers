@@ -19,9 +19,9 @@
   },
   {
     "name": "Moon",
-    "damage": 3,
+    "damage": 5,
     "description": "depends",
-    "globalDmg": 3
+    "globalDmg": 5
   },
   {
     "name": "Asteroid Field",
@@ -49,13 +49,13 @@
   },
   {
     "name": "Ice Planet",
-    "damage": 3,
+    "damage": 5,
     "description": "lots of resources",
-    "globalDmg": 3
+    "globalDmg": 5
   },
   {
     "name": "Borg Ship",
-    "damage": 30,
+    "damage": 45,
     "description": "terrifying",
     "globalDmg": 0
   }
