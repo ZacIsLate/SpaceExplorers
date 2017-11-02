@@ -2,6 +2,52 @@ const Game = require('./game');
 const ships = require('../lib/data/ships');
 
 const savedCharacters = [{ _id: '122', name: 'joe' }, { _id: '789', name: 'dan' }, { _id: '345', name: 'sam' }];
+const spaceEvents = [
+    {
+        description: 'You have been attacked by klingons!!',
+        win: false,
+        lose: false,
+        resolved: false,
+        prompts: [
+            { text: 'laser beam', action: 'attack' },
+            { text: 'talk it out', action: 'diplomacy' },
+            { text: 'runaway', action: 'run' }
+        ]
+    },
+    {
+        description: 'You have been attacked by klingons!!',
+        win: false,
+        lose: false,
+        resolved: true,
+        prompts: [
+            { text: 'laser beam', action: 'attack' },
+            { text: 'talk it out', action: 'diplomacy' },
+            { text: 'runaway', action: 'run' }
+        ]
+    },
+    {
+        description: 'You have encountered an Advanced Cylon War Raider Battalion!!',
+        win: false,
+        lose: false,
+        resolved: false,
+        prompts: [
+            { text: 'Partical cannon', action: 'attack' },
+            { text: 'Negotiate', action: 'diplomacy' },
+            { text: 'Try to  escape', action: 'run' }
+        ]
+    },
+    {
+        description: 'You have encountered an Advanced Cylon War Raider Battalion!!',
+        win: false,
+        lose: false,
+        resolved: true,
+        prompts: [
+            { text: 'Partical cannon', action: 'attack' },
+            { text: 'Negotiate', action: 'diplomacy' },
+            { text: 'Try to  escape', action: 'run' }
+        ]
+    },
+];
 
 const service = {
     signUp(info) {
