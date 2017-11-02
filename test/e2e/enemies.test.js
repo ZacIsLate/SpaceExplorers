@@ -84,7 +84,7 @@ describe('enemy API', () => {
             .then( res => assert.deepEqual(res.body, { removed: true}));        
     });
 
-    it.only('Enemy PATCH', () => {
+    it('Enemy PATCH', () => {
         return request.post('/api/enemies')
             .send(klingonWarbird)
             .then(({ body: enemyRes}) => {
