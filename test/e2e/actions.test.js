@@ -111,7 +111,7 @@ describe('actions API', () =>{
             });
     });
 
-    it.only(' checks if post action is working for attack', ()=>{
+    it(' checks if post action is working for attack', ()=>{
         return request.get(`/api/game/character/${savedChar._id}/event`)
             .then( () => {
                 return request.post(`/api/game/character/${savedChar._id}/actions`)
