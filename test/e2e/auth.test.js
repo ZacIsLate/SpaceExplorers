@@ -4,14 +4,14 @@ const db = require('./db');
 
 describe('Authentication API', () => {
 
-    beforeEach( () =>db.drop());
+    beforeEach( () => db.drop());
     let token = null;
     let char = null;
     beforeEach( () => {
         const ship = {
             name: 'Moya',
-            healthPoints: 1000,
-            damage: 100,
+            healthPoints: 300,
+            damage: 25,
             description: 'A living sentient bio-mechanical space ship.',
             class: 'Leviathan'
         };
@@ -27,13 +27,13 @@ describe('Authentication API', () => {
             .then( ({body}) => char = body );
     });
 
-    beforeEach( ()=> {
+    beforeEach(() => {
         return request.post('/api/auth/signup')
             .send({name: 'Tester', password: '007', Characters: ['59fa5438b894ff3f420b2206']})
             .then( ({body}) => {
                 token = body.token;
             })
-            .then( ()=>{
+            .then(() => {
                 return request.post(`/api/newChar/${char._id}`)
                     .set('Authorization', token);
             });
@@ -44,7 +44,7 @@ describe('Authentication API', () => {
         assert.ok(token);
     });
 
-    it('cant signup with the same name', ()=> {
+    it('cant signup with the same name', () => {
         return request.post('/api/auth/signup')
             .send({name: 'Tester', password:'abc'})
             .then(
@@ -68,7 +68,7 @@ describe('Authentication API', () => {
 
     it('should sign in with the same credentials',() => {
         return request.post('/api/auth/signin')
-            .send({ name:'Tester', password:'007'})
+            .send({ name:'Tester', password:'007' })
             .then( ({ body }) => {
                 assert.ok(body.token);
                 assert.ok(body.userChars);
@@ -77,7 +77,7 @@ describe('Authentication API', () => {
 
     it('cant sign in with wrong credentials',() => {
         return request.post('/api/auth/signin')
-            .send({ name:'Tester', password:'006'})
+            .send({ name:'Tester', password:'006' })
             .then(
                 () => {throw new Error('Unexpected success which is bad');},
                 err => {
@@ -85,5 +85,4 @@ describe('Authentication API', () => {
                 }
             );
     });
-
 });
