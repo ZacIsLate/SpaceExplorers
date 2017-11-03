@@ -1,6 +1,7 @@
 const inquirer = require('inquirer');
 const colors = require('colors');//eslint-disable-line
 const lineBreak = () => console.log('\n\n\n\n\n');
+const ShortLineBreak = () => console.log('\n');
 
 const authQuestions = [
     {
@@ -48,7 +49,7 @@ class Game{
                 lineBreak();
                 this.api.getCharacterTemplates()
                     .then(templates => {
-                        templates = templates.filter( each =>each.template===true);
+                        templates = templates.filter( each =>each.template === true);
                         templates = templates.map(template => {
                             return { name: `${template.name.green.bold.underline}:  ${template.description}`, value: template._id };
                         });
@@ -70,7 +71,6 @@ class Game{
                     .then(answers => {
                         answers.userId = id;
                         this.api.char_id = answers;
-                        console.log('characterID', this.api.char_id);
                         this.api.saveCharacter(answers)
                             .then( save => {
                                 this.api.char_id = save;
@@ -108,46 +108,52 @@ class Game{
     }
     generateEvent(id){
         this.api.loadEvent(id)
-            .then( event => {
+            .then(event => {
                 return this.resolveEvent(event);
             });
     }
-    resolveEvent(event){
-        lineBreak();
-        lineBreak();
-        console.log('we are at the beggining of resolveEvent');
-        console.log(event.description.yellow);
-        if(event.win) console.log('You win!');
-        if(event.lose) console.log('You lose!');
-        if(!event.resolved){
-            const chooseAction = event.prompts.map( prompt => {
-                return {value: prompt.action, name: prompt.text};
-            });
-            //chooseAction[0].name = chooseAction[0].name.red;
-            // chooseAction[1].name = chooseAction[1].name.green;
-            // chooseAction[2].name = chooseAction[2].name.blue;
-            const choices = {
-                type: 'list',
-                name: 'action',
-                message: 'Choose an action',
-                choices: chooseAction,
-            };
-            inquirer.prompt(choices)
-                .then(choice => {
-                    choice.char_id = this.api.char_id;
-                    this.api.resolveAction(choice)
-                        .then(resolution => {
-                            this.resolveEvent(resolution.result);
-                        });
-                });                   
+    resolveEvent(event) {
+        let eventDescription = null;
+        event.resolved ? eventDescription = event.description.green : eventDescription = event.description.yellow;
+        ShortLineBreak();
+        console.log(eventDescription);
+        if (!event.resolved) lineBreak();
+        if (event.win) {
+            console.log('You win!');
+            return;
+        } else if (event.lose) {
+            console.log('You lose!');
+            return;
         } else {
-            console.log('we are calling generate event with mystery id of:',this.api.char_id.charId);
-            this.generateEvent(this.api.char_id.charId);
+            if (!event.resolved) {
+                const chooseAction = event.prompts.map(prompt => {
+                    return { value: prompt.action, name: prompt.text };
+                });
+                chooseAction[0].name = chooseAction[0].name.red;
+                chooseAction[1].name = chooseAction[1].name.green;
+                chooseAction[2].name = chooseAction[2].name.blue;
+                const choices = {
+                    type: 'list',
+                    name: 'action',
+                    message: 'Choose an action',
+                    choices: chooseAction,
+                };
+                inquirer.prompt(choices)
+                    .then(choice => {
+                        choice.char_id = this.api.char_id;
+                        this.api.resolveAction(choice)
+                            .then(resolution => {
+                                this.resolveEvent(resolution.result);
+                            });
+                    });
+            } else {
+                this.generateEvent(this.api.char_id.charId);
+            }
         }
     }
 }
 
-    
+
 
 
 
