@@ -57,8 +57,13 @@ const service = {
         //Should return to a random event description object to the game.
     },
     resolveAction(option) {
+        console.log('we are hitting resolve action with option of:', option );
         return request.post(`${API_URL}/game/character/${option.char_id.charId}/actions`)
-            .then(({body: optionRes}) => optionRes);
+            .send(option)
+            .then( ({body}) => {
+                console.log('we got this from post actions:', body);
+                return body;
+            });
         //Should return an event description object based an a provided option. 
     }
 };

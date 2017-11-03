@@ -74,7 +74,6 @@ class Game{
                         this.api.saveCharacter(answers)
                             .then( save => {
                                 this.api.char_id = save;
-                                console.log('got here with characterID', this.api.char_id);
                                 this.chooseCharacter(id);
                             });
                     });
@@ -84,7 +83,6 @@ class Game{
         lineBreak();
         this.api.getCharacters(id)
             .then( characters => {
-                console.log('should be null here:', characters);
                 let choices = [];
                 if(characters){
                     choices = characters.map(character => {
@@ -100,10 +98,8 @@ class Game{
                     choices
                 })
                     .then(({ character }) => {
-                        console.log('musterious caracter shane add descriptive names to things!!!!', character);
                         if( character === 'Create') this.createNewCharacter(id);
                         else {
-                            console.log('we got here');
                             this.generateEvent(character);
                         }
                     });
@@ -112,7 +108,9 @@ class Game{
     }
     generateEvent(id){
         this.api.loadEvent(id)
-            .then( event => this.resolveEvent(event));
+            .then( event => {
+                return this.resolveEvent(event);
+            });
     }
     resolveEvent(event){
         lineBreak();
@@ -122,10 +120,8 @@ class Game{
         if(event.win) console.log('You win!');
         if(event.lose) console.log('You lose!');
         if(!event.resolved){
-            console.log('mustery event is:',event);
-            const chooseAction = event.promts.map( promt => {
-                console.log('in each one promt is', promt);
-                return {value: promt.action, name: promt.text};
+            const chooseAction = event.prompts.map( prompt => {
+                return {value: prompt.action, name: prompt.text};
             });
             //chooseAction[0].name = chooseAction[0].name.red;
             // chooseAction[1].name = chooseAction[1].name.green;
@@ -139,15 +135,14 @@ class Game{
             inquirer.prompt(choices)
                 .then(choice => {
                     choice.char_id = this.api.char_id;
-                    console.log('you have chosen', choice);
                     this.api.resolveAction(choice)
-                        .then(resolution =>{
-                            console.log('resolution thingy is:resolution');
-                            this.resolveEvent(resolution);
+                        .then(resolution => {
+                            this.resolveEvent(resolution.result);
                         });
                 });                   
         } else {
-            this.generateEvent();
+            console.log('we are calling generate event with mystery id of:',this.api.char_id.charId);
+            this.generateEvent(this.api.char_id.charId);
         }
     }
 }

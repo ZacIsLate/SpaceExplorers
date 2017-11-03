@@ -114,7 +114,7 @@ describe('actions API', () =>{
         return request.get(`/api/game/character/${savedChar._id}/event`)
             .then( () => {
                 return request.post(`/api/game/character/${savedChar._id}/actions`)
-                    .send({action:'attack'});
+                    .send({action:'Attack'});
             })
             .then( ({body}) => {
                 assert.ok(body.result.description);
