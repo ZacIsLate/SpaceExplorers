@@ -9,8 +9,8 @@ describe( 'Character model', () => {
             description: 'Warrant officer who survived multiple encounters with Xenomorphs',
             ship:{
                 name: 'Moya',
-                healthPoints: 1000,
-                damage: 100,
+                healthPoints: 300,
+                damage: 25,
                 description: 'A living sentient bio-mechanical space ship.',
                 class: 'Leviathan'
             },
