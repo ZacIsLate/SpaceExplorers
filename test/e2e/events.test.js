@@ -1,18 +1,18 @@
 const assert = require('chai').assert;
-const mongoose = require('mongoose'); 
+const db = require('./db'); 
 const request = require('./request'); 
 
-describe('enemy API', () => {
+describe('event API', () => {
     const enemy = {
         name: 'Advanced Cylon War Raider Battalion',
-        damage: 25,
-        healthPoints: 55,
+        damage: 15,
+        healthPoints: 50,
     };
     const environment = {
-        name: 'Astroid Field',
-        damage: 25,
+        name: 'Asteroid Field',
+        damage: 40,
         description: 'The asteroid belt is the circumstellar disc in the Solar System located roughly between the orbits of the planets Mars and Jupiter. It is occupied by numerous irregularly shaped bodies called asteroids or minor planets.',
-        globalDmg: 15
+        globalDmg: 30
     };
     let savedEnvironment = null;
     let savedEnemy = null;
@@ -20,7 +20,7 @@ describe('enemy API', () => {
     let testEvent2 = null;
 
 
-    beforeEach(() => mongoose.connection.dropDatabase());
+    beforeEach(() => db.drop());
 
     beforeEach(() => {
         return Promise.all([
@@ -33,7 +33,7 @@ describe('enemy API', () => {
         ])
             .then(() => {
                 testEvent = {
-                    scenario: 'You have encountered an Advanced Cylon War Raider Battalion inside of an astroid field!',
+                    scenario: 'You have encountered an Advanced Cylon War Raider Battalion inside of an asteroid field!',
                     spaceEnv: savedEnvironment._id,
                     enemy: savedEnemy._id,
                     actions: [
@@ -123,7 +123,7 @@ describe('enemy API', () => {
             });
     });
 
-    it('Should save an event with an id', () => {
+    it('saves an event with an id', () => {
         return request.post('/api/events')
             .send(testEvent)
             .then(savedEvent => {
@@ -133,10 +133,10 @@ describe('enemy API', () => {
             });
     });
 
-    it('Should get all events', () => {
+    it('gets all events', () => {
         let savedEvents = [];
         let testEventData = [testEvent, testEvent2];
-        return Promise.all(testEventData.map( event =>{
+        return Promise.all(testEventData.map(event => {
             return request.post('/api/events')
                 .send(event)
                 .then(res => savedEvents.push(res.body));
@@ -151,13 +151,13 @@ describe('enemy API', () => {
             });
     });
 
-    it('Should get an event by id', ()=>{
+    it('gets an event by id', () => {
         return request.post('/api/events')
             .send(testEvent)
             .then(res => {
                 const savedEvent = res.body;
                 return request.get(`/api/events/${savedEvent._id}`)
-                    .then( gotEvent => {
+                    .then(gotEvent => {
                         gotEvent = gotEvent.body;
                         assert.deepEqual(savedEvent.name, gotEvent.name);
                     });
@@ -165,11 +165,11 @@ describe('enemy API', () => {
 
     });
 
-    it('Should update an event', ()=>{
+    it('updates an event', () => {
         let savedEvent = null; 
         return request.post('/api/events')
             .send(testEvent)
-            .then( res => {
+            .then(res => {
                 savedEvent = res.body;
                 testEvent.scenario = '#######';
                 return request.put(`/api/events/${savedEvent._id}`)
@@ -178,7 +178,7 @@ describe('enemy API', () => {
             .then(res => assert.deepEqual(res.body.nModified === 1, true));
     });
 
-    it('Deletes event by ID', () =>{
+    it('deletes event by id', () => {
         let savedEvent = null;
         return request.post('/api/events')
             .send(testEvent)
@@ -186,13 +186,13 @@ describe('enemy API', () => {
                 savedEvent = res.body;
                 return request.delete(`/api/events/${savedEvent._id}`);
             })
-            .then( res => assert.deepEqual(res.body, { removed: true}));        
+            .then(res => assert.deepEqual(res.body, { removed: true} ));        
     });
 
-    it('Patch a event', () => {
+    it('patches an event', () => {
         return request.post('/api/events')
             .send(testEvent)
-            .then(({body: eventRes }) => {
+            .then(({ body: eventRes }) => {
                 assert.ok(eventRes._id);
                 eventRes.scenario = 'event has ended';
                 return request.patch(`/api/events/${eventRes._id}`)
@@ -202,5 +202,4 @@ describe('enemy API', () => {
                     });
             });
     });
-
 });

@@ -48,6 +48,7 @@ class Game{
                 lineBreak();
                 this.api.getCharacterTemplates()
                     .then(templates => {
+                        templates = templates.filter( each =>each.template===true);
                         templates = templates.map(template => {
                             return { name: `${template.name.green.bold.underline}:  ${template.description}`, value: template._id };
                         });
@@ -99,30 +100,36 @@ class Game{
                     choices
                 })
                     .then(({ character }) => {
-                        console.log('character', character);
+                        console.log('musterious caracter shane add descriptive names to things!!!!', character);
                         if( character === 'Create') this.createNewCharacter(id);
-                        else this.generateEvent();
+                        else {
+                            console.log('we got here');
+                            this.generateEvent(character);
+                        }
                     });
                 
             });
     }
-    generateEvent(){
-        this.api.loadEvent(this.api.char_id)
+    generateEvent(id){
+        this.api.loadEvent(id)
             .then( event => this.resolveEvent(event));
     }
     resolveEvent(event){
         lineBreak();
         lineBreak();
+        console.log('we are at the beggining of resolveEvent');
         console.log(event.description.yellow);
         if(event.win) console.log('You win!');
         if(event.lose) console.log('You lose!');
         if(!event.resolved){
-            const chooseAction = event.prompts.map( prompt => {
-                return {value: prompt.action, name: prompt.text};
+            console.log('mustery event is:',event);
+            const chooseAction = event.promts.map( promt => {
+                console.log('in each one promt is', promt);
+                return {value: promt.action, name: promt.text};
             });
-            chooseAction[0].name = chooseAction[0].name.red;
-            chooseAction[1].name = chooseAction[1].name.green;
-            chooseAction[2].name = chooseAction[2].name.blue;
+            //chooseAction[0].name = chooseAction[0].name.red;
+            // chooseAction[1].name = chooseAction[1].name.green;
+            // chooseAction[2].name = chooseAction[2].name.blue;
             const choices = {
                 type: 'list',
                 name: 'action',
@@ -134,7 +141,10 @@ class Game{
                     choice.char_id = this.api.char_id;
                     console.log('you have chosen', choice);
                     this.api.resolveAction(choice)
-                        .then(resolution => this.resolveEvent(resolution));
+                        .then(resolution =>{
+                            console.log('resolution thingy is:resolution');
+                            this.resolveEvent(resolution);
+                        });
                 });                   
         } else {
             this.generateEvent();
