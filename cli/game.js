@@ -48,6 +48,7 @@ class Game{
                 lineBreak();
                 this.api.getCharacterTemplates()
                     .then(templates => {
+                        templates = templates.filter( each =>each.template===true);
                         templates = templates.map(template => {
                             return { name: `${template.name.green.bold.underline}:  ${template.description}`, value: template._id };
                         });
