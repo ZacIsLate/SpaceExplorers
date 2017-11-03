@@ -1,13 +1,13 @@
 const { assert } = require('chai');
 const User = require('../../lib/models/user');
 
-describe('User Model test', () => {
+describe('User Model', () => {
     
     const user = new User({
         name: 'Admiral_Adama'
     });
 
-    it('generates hash from password', ()=> {
+    it('generates hash from password', () => {
         user.generateHash('password');
         assert.isOk(user.hash);
     });

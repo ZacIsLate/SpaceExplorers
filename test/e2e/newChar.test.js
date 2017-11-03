@@ -16,12 +16,11 @@ describe('newChar API', () =>{
     beforeEach( () => {
         const ship = {
             name: 'Moya',
-            healthPoints: 1000,
-            damage: 100,
+            healthPoints: 300,
+            damage: 25,
             description: 'A living sentient bio-mechanical space ship.',
             class: 'Leviathan'
         };
-
         return request.post('/api/characters')
             .send({
                 name: 'Ford Prefect',
@@ -30,7 +29,7 @@ describe('newChar API', () =>{
                 ship: ship,
                 template:true
             })
-            .then( ({body}) => char = body );
+            .then(({ body }) => char = body );
     });
 
     beforeEach( () => {
@@ -48,13 +47,13 @@ describe('newChar API', () =>{
 
     beforeEach( ()=> {
         return request.post('/api/auth/signup')
-            .send({name: 'Tester', password: '007'})
-            .then( ({body}) => {
+            .send({ name: 'Tester', password: '007' })
+            .then(({ body }) => {
                 token = body.token;
             });
     });
 
-    it('saves a character to the database', ()=>{
+    it('saves a character to the database', () => {
         return request.post(`/api/newChar/${char._id}`)
             .set('Authorization', token)
             .send({ship: savedShip._id})
@@ -62,6 +61,4 @@ describe('newChar API', () =>{
                 assert.ok(got.body);
             });
     });
-
-
 });

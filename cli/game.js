@@ -115,6 +115,7 @@ class Game{
     resolveEvent(event){
         lineBreak();
         lineBreak();
+        console.log('we are at the beggining of resolveEvent');
         console.log(event.description.yellow);
         if(event.win) console.log('You win!');
         if(event.lose) console.log('You lose!');

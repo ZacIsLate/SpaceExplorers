@@ -1,12 +1,12 @@
 const assert = require('chai').assert;
 const Event = require('../../lib/models/event');
 
-describe('Event model', ()=>{
+describe('event model', () => {
 
-    it('Validates a good event model', () => {
+    it('validates a good event model', () => {
          
         const event = new Event({
-            scenario: 'You have encountered an Advanced Cylon War Raider Battalion inside of an astroid field!',
+            scenario: 'You have encountered an Advanced Cylon War Raider Battalion inside of an asteroid field!',
             spaceEnv: '590643bc2cd3da2808b0e651', 
             enemy: '590643bc2cd3da2808b0e651',
             actions: [
@@ -54,7 +54,7 @@ describe('Event model', ()=>{
         assert.equal(event.validateSync(), undefined);
     });
 
-    it('Checks for required fields', () => {
+    it('checks for required fields', () => {
         const event = new Event({});
         const { errors } = event.validateSync();
         assert.equal(errors.scenario.kind, 'required');
