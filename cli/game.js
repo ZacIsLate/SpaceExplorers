@@ -117,6 +117,7 @@ class Game{
     resolveEvent(event){
         lineBreak();
         lineBreak();
+        console.log('we are at the beggining of resolveEvent');
         console.log(event.description.yellow);
         if(event.win) console.log('You win!');
         if(event.lose) console.log('You lose!');
@@ -140,7 +141,10 @@ class Game{
                     choice.char_id = this.api.char_id;
                     console.log('you have chosen', choice);
                     this.api.resolveAction(choice)
-                        .then(resolution => this.resolveEvent(resolution));
+                        .then(resolution =>{
+                            console.log('resolution thingy is:resolution');
+                            this.resolveEvent(resolution);
+                        });
                 });                   
         } else {
             this.generateEvent();
