@@ -38,6 +38,8 @@ class Game{
             .catch(console.log);
     }
     createNewCharacter(id) {
+        ShortLineBreak();
+        
         this.api.getShips()
             .then(ships => {
                 ships = ships.map(ship => {
@@ -47,6 +49,8 @@ class Game{
             })
             .then(shipChoices => {
                 lineBreak();
+                console.log('Your beloved planet, Morag, is dying. Rapidly. A series of volcanic explosions is tearing the planet apart. Pretty soon, there will be no breathable air and no viable food sources. You have collected supplies and a crew and soon will be heading out to another galaxy where there is a habitable planet. The journey will be onerous and grueling but critical for the continuation of your people. In order to make the journey, you must choose a ship.'.yellow);
+                ShortLineBreak();
                 this.api.getCharacterTemplates()
                     .then(templates => {
                         templates = templates.filter( each =>each.template === true);
