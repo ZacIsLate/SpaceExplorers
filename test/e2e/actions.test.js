@@ -3,7 +3,7 @@ const assert = require('chai').assert;
 const db = require('./db');
 
 
-describe.only('actions API', () =>{
+describe('actions API', () =>{
     beforeEach( () => db.drop());
 
     let savedEnvironment = null;
@@ -123,7 +123,7 @@ describe.only('actions API', () =>{
             });
     });
 
-    it.only('checks run', () => 
+    it('checks run', () => 
     {
         return request.get(`/api/game/character/${savedChar._id}/event`)
             .then( () => {

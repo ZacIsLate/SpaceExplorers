@@ -80,6 +80,7 @@ class Game{
             });
     }
     chooseCharacter(id){
+        console.log('we are choosing a char with id:', id);
         lineBreak();
         this.api.getCharacters(id)
             .then( characters => {
@@ -107,6 +108,7 @@ class Game{
             });
     }
     generateEvent(id){
+        console.log('generate event is called with id of', id);
         this.api.loadEvent(id)
             .then(event => {
                 return this.resolveEvent(event);
