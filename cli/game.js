@@ -112,19 +112,23 @@ class Game{
     }
     generateEvent(id){
         this.api.loadEvent(id)
-            .then( event => this.resolveEvent(event));
+            .then( event => {
+                console.log('we got to resolve event on line 116', event);
+                return this.resolveEvent(event);
+            });
     }
     resolveEvent(event){
         lineBreak();
         lineBreak();
+        console.log('this time in recurrsion event is:', event);
         console.log(event.description.yellow);
         if(event.win) console.log('You win!');
         if(event.lose) console.log('You lose!');
         if(!event.resolved){
             console.log('mustery event is:',event);
-            const chooseAction = event.promts.map( promt => {
-                console.log('in each one promt is', promt);
-                return {value: promt.action, name: promt.text};
+            const chooseAction = event.prompts.map( prompt => {
+                console.log('in each one promt is', prompt);
+                return {value: prompt.action, name: prompt.text};
             });
             //chooseAction[0].name = chooseAction[0].name.red;
             // chooseAction[1].name = chooseAction[1].name.green;
@@ -140,7 +144,10 @@ class Game{
                     choice.char_id = this.api.char_id;
                     console.log('you have chosen', choice);
                     this.api.resolveAction(choice)
-                        .then(resolution => this.resolveEvent(resolution));
+                        .then(resolution => {
+                            console.log('we got to resolve event on line 146', resolution.result);
+                            this.resolveEvent(resolution);
+                        });
                 });                   
         } else {
             this.generateEvent();
