@@ -40,11 +40,11 @@ const service = {
     },
     getCharacters(userId) {
         console.log('we got to get charecters user id is:', userId);
-        return request.get(`${API_URL}/characters/${userId}`)
+        return request.get(`${API_URL}/user/${userId}/characters`)
             .set('Authorization', token)
             .then(({body}) =>{
                 console.log('we got body from get charecters', body);
-                return body;
+                return body.userChars;
             });
         //Should return to the game an array of objects containing all characters corresponding to the userId.
     },
