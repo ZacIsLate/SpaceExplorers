@@ -126,12 +126,12 @@ class Game{
         if (!event.resolved) lineBreak();
         if (event.win) {
             lineBreak();
-            console.log('You win!'.bold.green);
+            console.log('You found Your new Home, the grass is green and the oceans blue. You notice cute little furry animals running around. They call themselves gremlins and keep asking for water. What could possibly go wrong?'.bold.green);
             lineBreak();
             return;
         } else if (event.lose) {
             lineBreak();
-            console.log('You lose!'.bold.orange);
+            console.log('You loose'.bold.orange);
             lineBreak();
             return;
         } else {
