@@ -101,7 +101,7 @@ class Game{
                 })
                     .then(({ character }) => {
                         console.log('musterious caracter shane add descriptive names to things!!!!', character);
-                        if( character === 'Create') this.createNewCharacter(id);
+                        if(!character) this.createNewCharacter(id);
                         else this.generateEvent();
                     });
                 
