@@ -6,22 +6,21 @@ describe('Ship Model', () => {
 
     beforeEach(() => shipData = {
         name: 'Moya',
-        healthPoints: 1000,
-        damage: 100,
+        healthPoints: 300,
+        damage: 25,
         description: 'A living sentient bio-mechanical space ship.',
         class: 'Leviathan'
     });
 
-    it('Valid Model', () => {
+    it('checks that ship model is valid', () => {
         const farScape = new Ship(shipData);
-
         assert.ok(!farScape.validateSync());
         assert.ok(farScape.name);
     });
-    it(' required fields include', () => {
+
+    it('checks that required fields are included', () => {
         delete shipData.name;
         const farScape = new Ship(shipData);
-
         assert.equal(farScape.validateSync().errors.name.kind, 'required');
     });
 });

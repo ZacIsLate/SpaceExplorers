@@ -2,7 +2,7 @@ const request = require('./request');
 const assert = require('chai').assert;
 const db = require('./db');
 
-describe('Characters API', () => {
+describe('characters API', () => {
     let savedEnvironment = null;
     let savedEnemy = null;
     let savedEvent = null;
@@ -32,7 +32,7 @@ describe('Characters API', () => {
         globalDmg: 30
     };
 
-    beforeEach( ()=> {
+    beforeEach( () => {
         return Promise.all([
             request.post('/api/enemies')
                 .send(enemy)
@@ -59,7 +59,6 @@ describe('Characters API', () => {
                                 outcome: -40
                             }
                         },
-
                         {
                             option: 'Diplomacy',
                             difficulty: 0,
@@ -98,14 +97,14 @@ describe('Characters API', () => {
                                 description: 'human/alien travel writer',
                                 user:'590643bc2cd3da2808b0e651',
                                 ship: ship,
-                                currentEvent: {event: savedEvent._id}
+                                currentEvent: { event: savedEvent._id }
                             }, 
                             {
                                 name: 'Mark Watney',
                                 description: 'Martian - colonized a planet on his own',
                                 user:'590643bc2cd3da2808b0e651',
                                 ship: ship,
-                                currentEvent: {event: savedEvent._id}
+                                currentEvent: { event: savedEvent._id }
                             }
                         ];
                     });
@@ -151,11 +150,11 @@ describe('Characters API', () => {
             .then(res => assert.equal(res.body.name, 'Ford Prefect'));
     });
 
-    it('Should update a character', ()=>{
+    it('updates a character', () => {
         let savedCharacter = null; 
         return request.post('/api/characters')
             .send(characterData[0])
-            .then( res => {
+            .then(res => {
                 savedCharacter = res.body;
                 characterData[0].name = 'Helena Cain';
                 return request.put(`/api/characters/${savedCharacter._id}`)
@@ -164,7 +163,7 @@ describe('Characters API', () => {
             .then(res => assert.deepEqual(res.body.nModified === 1, true));
     });
 
-    it('Deletes Character by ID', () =>{
+    it('deletes character by id', () => {
         let savedCharacter = null;
         return request.post('/api/characters')
             .send(characterData[0])
@@ -172,10 +171,10 @@ describe('Characters API', () => {
                 savedCharacter = res.body;
                 return request.delete(`/api/characters/${savedCharacter._id}`);
             })
-            .then( res => assert.deepEqual(res.body, { removed: true}));   
+            .then(res => assert.deepEqual(res.body, { removed: true}));   
     });
 
-    it('Patch a character by id', () => {
+    it('patches a character by id', () => {
         return request.post('/api/characters')
             .send(characterData[0])
             .then(({ body: charRes }) => {

@@ -20,8 +20,8 @@ Coding consistency
 7. Promises not async/await
 
 Behavior
-1. Take breaks every 30 minutes?
-2. Stand ups twice a day?
+1. Taking breaks every 30 minutes is recommended
+2. Stand ups twice a day
 3. No pulling in your own pull request
 
 User Stories
