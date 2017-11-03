@@ -101,14 +101,17 @@ class Game{
                 })
                     .then(({ character }) => {
                         console.log('musterious caracter shane add descriptive names to things!!!!', character);
-                        if(!character) this.createNewCharacter(id);
-                        else this.generateEvent();
+                        if( character === 'Create') this.createNewCharacter(id);
+                        else {
+                            console.log('we got here');
+                            this.generateEvent(character);
+                        }
                     });
                 
             });
     }
-    generateEvent(){
-        this.api.loadEvent(this.api.char_id)
+    generateEvent(id){
+        this.api.loadEvent(id)
             .then( event => this.resolveEvent(event));
     }
     resolveEvent(event){
@@ -118,12 +121,14 @@ class Game{
         if(event.win) console.log('You win!');
         if(event.lose) console.log('You lose!');
         if(!event.resolved){
-            const chooseAction = event.prompts.map( prompt => {
-                return {value: prompt.action, name: prompt.text};
+            console.log('mustery event is:',event);
+            const chooseAction = event.promts.map( promt => {
+                console.log('in each one promt is', promt);
+                return {value: promt.action, name: promt.text};
             });
-            chooseAction[0].name = chooseAction[0].name.red;
-            chooseAction[1].name = chooseAction[1].name.green;
-            chooseAction[2].name = chooseAction[2].name.blue;
+            //chooseAction[0].name = chooseAction[0].name.red;
+            // chooseAction[1].name = chooseAction[1].name.green;
+            // chooseAction[2].name = chooseAction[2].name.blue;
             const choices = {
                 type: 'list',
                 name: 'action',

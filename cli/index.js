@@ -49,12 +49,15 @@ const service = {
         //Should return to the game an array of objects containing all characters corresponding to the userId.
     },
     loadEvent(characterId) {
-        return request.get(`${API_URL}/character/${characterId._id}/event`)
-            .then(({ body: newEvent }) => newEvent);
+        return request.get(`${API_URL}/game/character/${characterId}/event`)
+            .then(({ body }) =>{
+                console.log('the return from generate new even is',body.result);
+                return body.result;
+            });
         //Should return to a random event description object to the game.
     },
     resolveAction(option) {
-        return request.post(`${API_URL}/game/character/${option.char_id}/event`)
+        return request.post(`${API_URL}/game/character/${option.char_id.charId}/actions`)
             .then(({body: optionRes}) => optionRes);
         //Should return an event description object based an a provided option. 
     }
