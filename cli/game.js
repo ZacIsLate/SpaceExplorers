@@ -41,12 +41,16 @@ class Game{
         this.api.getShips()
             .then(ships => {
                 ships = ships.map(ship => {
-                    return { name: `${ship.name.green.bold.underline}:  ${ship.description}`, value: ship._id };
+                    const dmg = ship.damage.toString();
+                    const speed = ship.speed.toString();
+                    return { name: `${ship.name.green.bold.underline}: (Damage:${dmg.magenta.bold} Speed:${speed.magenta}) ${ship.description}`, value: ship._id };
                 });
                 return ships;
             })
             .then(shipChoices => {
                 lineBreak();
+                console.log('Your beloved planet, Morag, is dying. Rapidly. A series of volcanic explosions is tearing the planet apart. Pretty soon, there will be no breathable air and no viable food sources. You have collected supplies and a crew and soon will be heading out to another galaxy where there is a habitable planet. The journey will be onerous and grueling but critical for the continuation of your people. In order to make the journey, you must choose a ship.'.yellow);
+                ShortLineBreak();
                 this.api.getCharacterTemplates()
                     .then(templates => {
                         templates = templates.filter( each =>each.template === true);
@@ -119,10 +123,14 @@ class Game{
         console.log(eventDescription);
         if (!event.resolved) lineBreak();
         if (event.win) {
-            console.log('You win!');
+            lineBreak();
+            console.log('You win!'.bold.green);
+            lineBreak();
             return;
         } else if (event.lose) {
-            console.log('You lose!');
+            lineBreak();
+            console.log('You lose!'.bold.orange);
+            lineBreak();
             return;
         } else {
             if (!event.resolved) {
