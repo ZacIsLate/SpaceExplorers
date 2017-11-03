@@ -84,7 +84,6 @@ class Game{
             });
     }
     chooseCharacter(id){
-        console.log('we are choosing a char with id:', id);
         lineBreak();
         this.api.getCharacters(id, this.api.token)
             .then( characters => {
@@ -112,7 +111,6 @@ class Game{
             });
     }
     generateEvent(id){
-        console.log('generate event is called with id of', id);
         this.api.loadEvent(id)
             .then(event => {
                 return this.resolveEvent(event);
@@ -131,7 +129,7 @@ class Game{
             return;
         } else if (event.lose) {
             lineBreak();
-            console.log('You loose'.bold.orange);
+            console.log('You lost, I guess this game is a little out of your league... maybe ask your parents for help?'.bold.orange);
             lineBreak();
             return;
         } else {

@@ -43,10 +43,8 @@ const service = {
         //Should return to the game an array of objects containing all characters corresponding to the userId.
     },
     loadEvent(characterId) {
-        console.log('we got here wit hchar id', characterId);
         return request.get(`${API_URL}/game/character/${characterId}/event`)
             .then(({ body }) =>{
-                console.log('we got back from server', body);
                 return body.result;
             });
         //Should return to a random event description object to the game.
