@@ -3,7 +3,7 @@ const assert = require('chai').assert;
 const db = require('./db');
 
 
-describe('actions API', () =>{
+describe.only('actions API', () =>{
     beforeEach( () => db.drop());
 
     let savedEnvironment = null;
@@ -16,13 +16,15 @@ describe('actions API', () =>{
         healthPoints: 1000,
         damage: 100,
         description: 'A living sentient bio-mechanical space ship.',
-        class: 'Leviathan'
+        class: 'Leviathan',
+        speed:50
     };
     
     const enemy = {
         name: 'Advanced Cylon War Raider Battalion',
         damage: 25,
-        healthPoints: 50,
+        healthPoints: 100,
+        speed:20
     };
 
     const environment = {
@@ -120,4 +122,17 @@ describe('actions API', () =>{
                 assert.ok(body.result.description);
             });
     });
+
+    it.only('checks run', () => 
+    {
+        return request.get(`/api/game/character/${savedChar._id}/event`)
+            .then( () => {
+                return request.post(`/api/game/character/${savedChar._id}/actions`)
+                    .send({action:'Run'});
+            })
+            .then( ({body}) => {
+                assert.ok(body.result.description);
+            });
+    });
+
 });
