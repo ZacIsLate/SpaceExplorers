@@ -1,9 +1,9 @@
 const assert = require('chai').assert;
-const mongoose = require('mongoose'); 
+const db = require('./db'); 
 const request = require('./request'); 
 
 describe('enemy API', () => {
-    beforeEach(() => mongoose.connection.dropDatabase());
+    beforeEach(() => db.drop());
 
     const cylonWarRaider = {
         name: 'Advanced Cylon War Raider Battalion',
@@ -17,7 +17,7 @@ describe('enemy API', () => {
         healthPoints: 50,
     };
 
-    it('Should save an enemy with an id', () => {
+    it('saves an enemy with an id', () => {
         return request.post('/api/enemies')
             .send(cylonWarRaider)
             .then(res => {
@@ -27,7 +27,7 @@ describe('enemy API', () => {
             });
     });
 
-    it('Should get all enemies',()=>{
+    it('gets all enemies',() => {
         let allEnemies = [];
         return Promise.all([
             request.post('/api/enemies')
@@ -37,9 +37,9 @@ describe('enemy API', () => {
                 .send(klingonWarbird)
                 .then(res => allEnemies.push(res.body))
         ])
-            .then(()=>{
+            .then(() => {
                 return request.get('/api/enemies')
-                    .then(gotEnemies =>{ 
+                    .then(gotEnemies => { 
                         gotEnemies = gotEnemies.body.sort((a, b) => a._id < b._id);
                         allEnemies = allEnemies.sort((a, b) => a._id < b._id);
                         assert.deepEqual(allEnemies, gotEnemies);
@@ -47,24 +47,24 @@ describe('enemy API', () => {
             });  
     });
 
-    it('Should get an enemy by id', ()=>{
+    it('gets an enemy by id', () => {
         return request.post('/api/enemies')
             .send(klingonWarbird)
-            .then( res => {
+            .then(res => {
                 const savedEnemy = res.body;
                 return request.get(`/api/enemies/${savedEnemy._id}`)
-                    .then( gotEnemy => {
+                    .then(gotEnemy => {
                         gotEnemy = gotEnemy.body;
                         assert.deepEqual(savedEnemy, gotEnemy);
                     });
             });
     });
 
-    it('Should update an enemy', ()=>{
+    it('updates an enemy', () => {
         let savedEnemy = null; 
         return request.post('/api/enemies')
             .send(cylonWarRaider)
-            .then( res => {
+            .then(res => {
                 savedEnemy = res.body;
                 cylonWarRaider.name = '#######';
                 return request.put(`/api/enemies/${savedEnemy._id}`)
@@ -73,7 +73,7 @@ describe('enemy API', () => {
             .then(res => assert.deepEqual(res.body.nModified === 1, true));
     });
 
-    it('Should delete enemy by ID', () =>{
+    it('deletes enemy by id', () =>{
         let savedEnemy = null;
         return request.post('/api/enemies')
             .send(klingonWarbird)
@@ -81,13 +81,13 @@ describe('enemy API', () => {
                 savedEnemy = res.body;
                 return request.delete(`/api/enemies/${savedEnemy._id}`);
             })
-            .then( res => assert.deepEqual(res.body, { removed: true}));        
+            .then(res => assert.deepEqual(res.body, { removed: true }));        
     });
 
-    it('Enemy PATCH', () => {
+    it('patches enemy', () => {
         return request.post('/api/enemies')
             .send(klingonWarbird)
-            .then(({ body: enemyRes}) => {
+            .then(({ body: enemyRes }) => {
                 assert.ok(enemyRes._id);
                 enemyRes.name = 'Klingon War hawk';
                 return request.patch(`/api/enemies/${enemyRes._id}`)
