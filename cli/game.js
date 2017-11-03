@@ -86,7 +86,7 @@ class Game{
     chooseCharacter(id){
         console.log('we are choosing a char with id:', id);
         lineBreak();
-        this.api.getCharacters(id)
+        this.api.getCharacters(id, this.api.token)
             .then( characters => {
                 let choices = [];
                 if(characters){

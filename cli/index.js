@@ -34,9 +34,9 @@ const service = {
             .set('Authorization', token)
             .then(({ body: newChar}) => newChar);
     },
-    getCharacters(userId) {
+    getCharacters(userId, usersToken) {
         return request.get(`${API_URL}/user/${userId}/characters`)
-            .set('Authorization', token)
+            .set('Authorization', usersToken)
             .then(({body}) =>{
                 return body.userChars;
             });
