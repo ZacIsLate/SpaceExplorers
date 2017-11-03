@@ -99,7 +99,7 @@ class Game{
                     choices
                 })
                     .then(({ character }) => {
-                        console.log('character', character);
+                        console.log('musterious caracter shane add descriptive names to things!!!!', character);
                         if( character === 'Create') this.createNewCharacter(id);
                         else this.generateEvent();
                     });
