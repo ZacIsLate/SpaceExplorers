@@ -74,7 +74,7 @@ class Game{
                     })
                     .then(answers => {
                         answers.userId = id;
-                        this.api.char_id = answers;
+                        this.api.char_id = answers.userId;
                         this.api.saveCharacter(answers)
                             .then( save => {
                                 this.api.char_id = save;
@@ -104,6 +104,8 @@ class Game{
                     .then(({ character }) => {
                         if( character === 'Create') this.createNewCharacter(id);
                         else {
+                            console.log('we should be here with character:', character);
+                            this.api.char_id = character;
                             this.generateEvent(character);
                         }
                     });
@@ -155,7 +157,7 @@ class Game{
                             });
                     });
             } else {
-                this.generateEvent(this.api.char_id.charId);
+                this.generateEvent(this.api.char_id);
             }
         }
     }

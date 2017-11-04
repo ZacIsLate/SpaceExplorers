@@ -16,7 +16,10 @@ const service = {
     signIn(info) {
         return request.post(`${API_URL}/auth/signin`)
             .send(info)
-            .then(({ body: infoRes}) => infoRes);
+            .then(({ body }) =>{
+                token = body.token;
+                return body;
+            });
         //Should get a user from the database and return an object to the id and token property.
     },
     getShips(){
@@ -24,10 +27,14 @@ const service = {
             .then( res => res.body );
     },
     saveCharacter(characterData){
+        console.log('we are at save charecter with char data', characterData);
         return request.post(`${API_URL}/newChar/${characterData['Character choice']}`)
             .set('Authorization', token)
             .send(characterData)
-            .then(({ body: charId}) => charId);
+            .then((body) =>{
+                console.log('we are at save char and body is', body);
+                return body;
+            });
     },
     getCharacterTemplates() {
         return request.get(`${API_URL}/characters`)
@@ -50,7 +57,8 @@ const service = {
         //Should return to a random event description object to the game.
     },
     resolveAction(option) {
-        return request.post(`${API_URL}/game/character/${option.char_id.charId}/actions`)
+        console.log('we are at resolve action with:',option);
+        return request.post(`${API_URL}/game/character/${option.char_id}/actions`)
             .send(option)
             .then( ({body}) => {
                 return body;
