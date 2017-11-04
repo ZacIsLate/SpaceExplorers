@@ -27,12 +27,10 @@ const service = {
             .then( res => res.body );
     },
     saveCharacter(characterData){
-        console.log('we are at save charecter with char data', characterData);
         return request.post(`${API_URL}/newChar/${characterData['Character choice']}`)
             .set('Authorization', token)
             .send(characterData)
             .then((body) =>{
-                console.log('we are at save char and body is', body);
                 return body;
             });
     },
@@ -57,7 +55,6 @@ const service = {
         //Should return to a random event description object to the game.
     },
     resolveAction(option) {
-        console.log('we are at resolve action with:',option);
         return request.post(`${API_URL}/game/character/${option.char_id}/actions`)
             .send(option)
             .then( ({body}) => {

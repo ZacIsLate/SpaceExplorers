@@ -104,7 +104,6 @@ class Game{
                     .then(({ character }) => {
                         if( character === 'Create') this.createNewCharacter(id);
                         else {
-                            console.log('we should be here with character:', character);
                             this.api.char_id = character;
                             this.generateEvent(character);
                         }
