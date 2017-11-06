@@ -7,7 +7,7 @@ const service = {
     signUp(info) {
         return request.post(`${API_URL}/auth/signup`)
             .send(info)
-            .then(({body}) => {
+            .then(({ body }) => {
                 token = body.token;
                 return body;
             });
@@ -22,27 +22,27 @@ const service = {
             });
         //Should get a user from the database and return an object to the id and token property.
     },
-    getShips(){
+    getShips() {
         return request.get(`${API_URL}/ships`)
-            .then( res => res.body );
+            .then(res => res.body);
     },
-    saveCharacter(characterData){
+    saveCharacter(characterData) {
         return request.post(`${API_URL}/newChar/${characterData['Character choice']}`)
             .set('Authorization', token)
             .send(characterData)
-            .then((body) =>{
+            .then(body => {
                 return body;
             });
     },
     getCharacterTemplates() {
         return request.get(`${API_URL}/characters`)
             .set('Authorization', token)
-            .then(({ body: newChar}) => newChar);
+            .then(({ body: newChar }) => newChar);
     },
     getCharacters(userId, usersToken) {
         return request.get(`${API_URL}/user/${userId}/characters`)
             .set('Authorization', usersToken)
-            .then(({body}) =>{
+            .then(({ body }) => {
                 return body.userChars;
             });
         //Should return to the game an array of objects containing all characters corresponding to the userId.
@@ -59,7 +59,7 @@ const service = {
         return request.post(`${API_URL}/game/character/${option.char_id}/actions`)
             .set('Authorization', token)
             .send(option)
-            .then( ({body}) => {
+            .then(({ body }) => {
                 return body;
             });
         //Should return an event description object based an a provided option. 
