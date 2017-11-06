@@ -26,6 +26,7 @@ class Game{
     constructor(api){
         this.api = api;
     }
+
     start(){
         inquirer.prompt(authQuestions)
             .then(({ auth, name, password }) => this.api[auth]({name, password}))
@@ -36,6 +37,7 @@ class Game{
             })
             .catch(console.log);
     }
+
     createNewCharacter(id) {
         this.api.getShips()
             .then(ships => {
@@ -82,6 +84,7 @@ class Game{
                     });
             });
     }
+
     chooseCharacter(id){
         lineBreak();
         this.api.getCharacters(id, this.api.token)
@@ -110,12 +113,14 @@ class Game{
                 
             });
     }
+
     generateEvent(id){
         this.api.loadEvent(id)
             .then(event => {
                 return this.resolveEvent(event);
             });
     }
+    
     resolveEvent(event) {
         let eventDescription = null;
         event.resolved ? eventDescription = event.description.green : eventDescription = event.description.yellow;
@@ -129,7 +134,7 @@ class Game{
             return;
         } else if (event.lose) {
             lineBreak();
-            console.log('You lost, I guess this game is a little out of your league... maybe ask your parents for help?'.bold.orange);
+            console.log('You lost, I guess this game is a little out of your league... maybe ask your parents for help?'.bold.red);
             lineBreak();
             return;
         } else {
@@ -160,9 +165,5 @@ class Game{
         }
     }
 }
-
-
-
-
 
 module.exports = Game;
