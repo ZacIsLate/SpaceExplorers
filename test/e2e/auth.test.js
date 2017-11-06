@@ -2,13 +2,15 @@ const request = require('./request');
 const { assert } = require('chai');
 const db = require('./db');
 
-describe.skip('Authentication API', () => {
+describe('Authentication API', () => {
 
     beforeEach( () => db.drop());
     let token = null;
     let char = null;
+    let ship = null;
+
     beforeEach( () => {
-        const ship = {
+        ship = {
             name: 'Moya',
             healthPoints: 300,
             damage: 25,
@@ -24,8 +26,14 @@ describe.skip('Authentication API', () => {
                 ship: ship,
                 template:true
             })
-            .then( ({body}) => char = body );
+            .then( ({body}) => char = body )
+            .then( ()=> {
+                return request.post('/api/ships')
+                    .send(ship)
+                    .then( ({body}) => ship= body);
+            });
     });
+
 
     beforeEach(() => {
         return request.post('/api/auth/signup')
@@ -35,7 +43,14 @@ describe.skip('Authentication API', () => {
             })
             .then(() => {
                 return request.post(`/api/newChar/${char._id}`)
-                    .set('Authorization', token);
+                    .set('Authorization', token)
+                    .send({
+                        name: 'Ford Prefect',
+                        description: 'human/alien travel writer',
+                        user:'590643bc2cd3da2808b0e651',
+                        ship: ship._id,
+                        template:true
+                    });
             });
     });
 
