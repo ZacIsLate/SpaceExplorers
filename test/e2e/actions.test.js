@@ -2,8 +2,7 @@ const request = require('./request');
 const assert = require('chai').assert;
 const db = require('./db');
 
-
-describe('actions API', () =>{
+describe.only('actions API', () =>{
     beforeEach( () => db.drop());
 
     let savedEnvironment = null;
@@ -104,7 +103,6 @@ describe('actions API', () =>{
             .then( ({body}) => savedChar = body );
     });
 
-
     it('checks if getEvent is working', ()=>{
         return request.get(`/api/game/character/${savedChar._id}/event`)
             .then( (got) => {
@@ -119,6 +117,7 @@ describe('actions API', () =>{
                     .send({action:'Attack'});
             })
             .then( ({body}) => {
+                console.log(body.result.description);
                 assert.ok(body.result.description);
             });
     });
@@ -131,6 +130,7 @@ describe('actions API', () =>{
                     .send({action:'Run'});
             })
             .then( ({body}) => {
+                console.log(body.result.description);
                 assert.ok(body.result.description);
             });
     });
