@@ -22,7 +22,6 @@ const authQuestions = [
     }
 ];
 
-
 class Game{
     constructor(api){
         this.api = api;
