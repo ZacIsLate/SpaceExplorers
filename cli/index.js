@@ -49,6 +49,7 @@ const service = {
     },
     loadEvent(characterId) {
         return request.get(`${API_URL}/game/character/${characterId}/event`)
+            .set('Authorization', token)
             .then(({ body }) =>{
                 return body.result;
             });
@@ -56,6 +57,7 @@ const service = {
     },
     resolveAction(option) {
         return request.post(`${API_URL}/game/character/${option.char_id}/actions`)
+            .set('Authorization', token)
             .send(option)
             .then( ({body}) => {
                 return body;

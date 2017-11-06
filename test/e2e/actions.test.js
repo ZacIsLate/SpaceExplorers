@@ -9,6 +9,8 @@ describe('actions API', () =>{
     let savedEnemy = null;
     let testEvent = null;
     let savedChar= null;
+    let token = null;
+    let savedUser= null;
 
     const ship = {
         name: 'Moya',
@@ -32,6 +34,16 @@ describe('actions API', () =>{
         description: 'The asteroid belt is the circumstellar disc in the Solar System located roughly between the orbits of the planets Mars and Jupiter. It is occupied by numerous irregularly shaped bodies called asteroids or minor planets.',
         globalDmg: 15
     };
+
+    beforeEach(() => {
+        return request.post('/api/auth/signup')
+            .send({name: 'Tester', password: '007', Characters: ['59fa5438b894ff3f420b2206']})
+            .then( ({body}) => {
+                console.log(body);
+                token = body.token;
+                savedUser = body.userId;
+            });
+    });
 
     beforeEach( () => {
         return Promise.all([
@@ -94,10 +106,11 @@ describe('actions API', () =>{
 
     beforeEach( () => {
         return request.post('/api/characters')
+            .set('Authorization', token)
             .send({
                 name: 'Ford Prefect',
                 description: 'human/alien travel writer',
-                user:'590643bc2cd3da2808b0e651',
+                user: savedUser,
                 ship: ship,
             })
             .then( ({body}) => savedChar = body );
@@ -105,6 +118,7 @@ describe('actions API', () =>{
 
     it('checks if getEvent is working', ()=>{
         return request.get(`/api/game/character/${savedChar._id}/event`)
+            .set('Authorization', token)
             .then( (got) => {
                 assert.ok(got);
             });
@@ -112,8 +126,10 @@ describe('actions API', () =>{
 
     it(' checks if post action is working for attack', ()=>{
         return request.get(`/api/game/character/${savedChar._id}/event`)
+            .set('Authorization', token)
             .then( () => {
                 return request.post(`/api/game/character/${savedChar._id}/actions`)
+                    .set('Authorization', token)
                     .send({action:'Attack'});
             })
             .then( ({body}) => {
@@ -125,8 +141,10 @@ describe('actions API', () =>{
     it('checks run', () => 
     {
         return request.get(`/api/game/character/${savedChar._id}/event`)
+            .set('Authorization', token)
             .then( () => {
                 return request.post(`/api/game/character/${savedChar._id}/actions`)
+                    .set('Authorization', token)
                     .send({action:'Run'});
             })
             .then( ({body}) => {
