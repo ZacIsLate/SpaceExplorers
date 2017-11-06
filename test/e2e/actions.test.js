@@ -39,7 +39,6 @@ describe('actions API', () =>{
         return request.post('/api/auth/signup')
             .send({name: 'Tester', password: '007', Characters: ['59fa5438b894ff3f420b2206']})
             .then( ({body}) => {
-                console.log(body);
                 token = body.token;
                 savedUser = body.userId;
             });
@@ -133,7 +132,6 @@ describe('actions API', () =>{
                     .send({action:'Attack'});
             })
             .then( ({body}) => {
-                console.log(body.result.description);
                 assert.ok(body.result.description);
             });
     });
@@ -148,7 +146,6 @@ describe('actions API', () =>{
                     .send({action:'Run'});
             })
             .then( ({body}) => {
-                console.log(body.result.description);
                 assert.ok(body.result.description);
             });
     });
