@@ -37,6 +37,7 @@ class Game {
             })
             .catch(console.log); //eslint-disable-line
     }
+
     createNewCharacter(id) {
         this.api.getShips()
             .then(ships => {
@@ -111,12 +112,14 @@ class Game {
                 
             });
     }
+
     generateEvent(id){
         this.api.loadEvent(id)
             .then(event => {
                 return this.resolveEvent(event);
             });
     }
+    
     resolveEvent(event) {
         let eventDescription = null;
         event.resolved ? eventDescription = event.description.green : eventDescription = event.description.yellow;
@@ -161,9 +164,5 @@ class Game {
         }
     }
 }
-
-
-
-
 
 module.exports = Game;
