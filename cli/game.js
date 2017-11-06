@@ -133,7 +133,7 @@ class Game {
             return;
         } else if(event.lose) {
             lineBreak();
-            console.log('You lost. I guess this game is a little out of your league... maybe ask your parents for help?'.bold.orange); //eslint-disable-line
+            console.log('You lost. I guess this game is a little out of your league... maybe ask your parents for help?'.bold.red); //eslint-disable-line
             lineBreak();
             return;
         } else {
