@@ -2,6 +2,8 @@
 # SpaceBack_enders
 [![Build Status](https://travis-ci.org/ZacIsLate/SpaceExplorers.svg?branch=master)](https://travis-ci.org/ZacIsLate/SpaceExplorers)
 
+// initial commit
+
 Coding consistency
 1. good: fn()  bad: fn ()
 2. good: map.(a => a * 2);
