@@ -1,6 +1,7 @@
 const assert = require('chai').assert;
 const db = require('./db'); 
 const request = require('./request'); 
+const createTestEvent = require('./event-test-data');
 
 describe('event API', () => {
     const enemy = {
@@ -14,112 +15,23 @@ describe('event API', () => {
         description: 'The asteroid belt is the circumstellar disc in the Solar System located roughly between the orbits of the planets Mars and Jupiter. It is occupied by numerous irregularly shaped bodies called asteroids or minor planets.',
         globalDmg: 30
     };
-    let savedEnvironment = null;
-    let savedEnemy = null;
-    let testEvent = null;
-    let testEvent2 = null;
-
 
     beforeEach(() => db.drop());
-
+    
+    let testEvent = null;
+    let testEvent2 = null;
     beforeEach(() => {
         return Promise.all([
             request.post('/api/enemies')
                 .send(enemy)
-                .then(res => savedEnemy = res.body),
+                .then(res => res.body._id),
             request.post('/api/spaceEnvs')
                 .send(environment)
-                .then(res => savedEnvironment = res.body)
+                .then(res => res.body._id)
         ])
-            .then(() => {
-                testEvent = {
-                    scenario: 'You have encountered an Advanced Cylon War Raider Battalion inside of an asteroid field!',
-                    spaceEnv: savedEnvironment._id,
-                    enemy: savedEnemy._id,
-                    actions: [
-                        {
-                            option: 'Attack',
-                            difficulty: 3,
-                            success: {
-                                description: 'You have decided to engage the Advanced Cylon War Raider squad, Your point defences cut each squadron in turn, sustaining minimal damage',
-                                outcome: 0
-                            },
-                            failure: {
-                                description: 'You have decided to engage the Advanced Cylon War Raider squad. Your point defense system was overwhelmed by the swarming raiders and your ship sustained heavy damage',
-                                outcome: -40
-                            }
-                        },
-
-                        {
-                            option: 'Diplomacy',
-                            difficulty: 0,
-                            success: {
-                                description: 'You have decided to negotiate with the Advanced Cylon War Raider squad. Surprisingly they decided to bury the hatchet of war and become friends. Apparently all that was needed was a little human/robot kindness.',
-                                outcome: 0
-                            },
-
-                            failure: {
-                                description: 'not gonna happen',
-                                outcome: 1
-                            }
-                        },
-                        {
-                            option: 'Run',
-                            difficulty: 6,
-                            success: {
-                                description: 'You have decided to try and outrun the Advanced Cylon War Raider squad. Your swift ship leaves the squad in the dust',
-                                outcome: 0
-                            },
-                            failure: {
-                                description: 'You have decided to outrun the Advanced Cylon War Raider squad. Unfortunately fast and nimble raiders manage to inflict significant damage before your ship manages to jump away',
-                                outcome: -40
-                            }
-                        }]
-                };
-                testEvent2 = {
-                    scenario: 'You have encountered an Advanced Cylon War Raider Battalion inside of an astroid field!',
-                    spaceEnv: savedEnvironment._id,
-                    enemy: savedEnemy._id,
-                    actions: [
-                        {
-                            option: 'Attack',
-                            difficulty: 3,
-                            success: {
-                                description: 'You have decided to engage the Advanced Cylon War Raider squad, Your point defences cut each squadron in turn, sustaining minimal damage',
-                                outcome: 0
-                            },
-                            failure: {
-                                description: 'You have decided to engage the Advanced Cylon War Raider squad. Your point defense system was overwhelmed by the swarming raiders and your ship sustained heavy damage',
-                                outcome: -40
-                            }
-                        },
-
-                        {
-                            option: 'Diplomacy',
-                            difficulty: 0,
-                            success: {
-                                description: 'You have decided to negotiate with the Advanced Cylon War Raider squad. Surprisingly they decided to bury the hatchet of war and become friends. Apparently all that was needed was a little human/robot kindness.',
-                                outcome: 0
-                            },
-
-                            failure: {
-                                description: 'not gonna happen',
-                                outcome: 1
-                            }
-                        },
-                        {
-                            option: 'Run',
-                            difficulty: 6,
-                            success: {
-                                description: 'You have decided to try and outrun the Advanced Cylon War Raider squad. Your swift ship leaves the squad in the dust',
-                                outcome: 0
-                            },
-                            failure: {
-                                description: 'You have decided to outrun the Advanced Cylon War Raider squad. Unfortunately fast and nimble raiders manage to inflict significant damage before your ship manages to jump away',
-                                outcome: -40
-                            }
-                        }]
-                };
+            .then(([savedEnemy, savedEnvironment]) => {
+                testEvent = createTestEvent(savedEnvironment, savedEnemy);
+                testEvent2 = createTestEvent(savedEnvironment, savedEnemy);
             });
     });
 
@@ -134,14 +46,13 @@ describe('event API', () => {
     });
 
     it('gets all events', () => {
-        let savedEvents = [];
         let testEventData = [testEvent, testEvent2];
         return Promise.all(testEventData.map(event => {
             return request.post('/api/events')
                 .send(event)
-                .then(res => savedEvents.push(res.body));
+                .then(res => res.body);
         }))
-            .then(() => {
+            .then(savedEvents => {
                 return request.get('/api/events')
                     .then(gotEvents => {
                         gotEvents = gotEvents.body.sort((a, b) => a._id < b._id);

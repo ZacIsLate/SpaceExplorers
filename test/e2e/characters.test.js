@@ -42,6 +42,7 @@ describe('characters API', () => {
                 .then(res => savedEnvironment = res.body)
         ])
             .then(() => {
+                // use the module event-test-data.js...
                 testEvent = {
                     scenario: 'You have encountered an Advanced Cylon War Raider Battalion inside of an astroid field!',
                     spaceEnv: savedEnvironment._id,

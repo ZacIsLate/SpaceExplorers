@@ -1,7 +1,7 @@
 const Game = require('./game');
 const request = require('superagent');
 const API_URL = 'https://zacIsLate.herokuapp.com/api';
-
+    
 let token = '';
 const service = {
     signUp(info) {

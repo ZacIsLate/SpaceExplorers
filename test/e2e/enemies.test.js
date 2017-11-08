@@ -2,6 +2,8 @@ const assert = require('chai').assert;
 const db = require('./db'); 
 const request = require('./request'); 
 
+// same problems as event.test.js
+
 describe('enemy API', () => {
     beforeEach(() => db.drop());
 

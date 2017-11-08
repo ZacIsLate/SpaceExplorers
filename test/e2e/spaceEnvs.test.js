@@ -22,39 +22,33 @@ describe('spaceEnv API', () => {
         }
     ];
 
-    it('returns environment with a new id', () => {
+    function saveEnv(data) {
         return request.post('/api/spaceEnvs')
-            .send(envData[0])
+            .send(data)
+            .then(res => res.body);
+    }
+
+    it('returns environment with a new id', () => {
+        return saveEnv(envData[0])
             .then(res => assert.ok(res.body._id));
     });
 
     it('returns all when no id is given', () => {
-        const savedEnv = [
-            request.post('/api/spaceEnvs')
-                .send(envData[0]),
-            request.post('/api/spaceEnvs')
-                .send(envData[1])
-        ];
-        return Promise.all(savedEnv)
-            .then(resArray => {
-                resArray = resArray.map(res => {
-                    return {
-                        name: res.body.name,
-                        _id: res.body._id
-                    };
-                });
+        
+        return Promise.all(envData.map(saveEnv))
+            .then(saved => {
                 return request.get('/api/spaceEnvs')
-                    .then(received => {
-                        assert.deepEqual(received.body[0].name, resArray[0].name);
-                        assert.deepEqual(received.body[1].name, resArray[1].name);
-                    });
+                    .then(envs => [envs, saved]);
+            })
+            .then(([envs, saved]) => {
+                assert.deepEqual(envs.body[0].name, saved[0].name);
+                assert.deepEqual(envs.body[1].name, saved[1].name);
             });
     });
 
     it('gets an env by id', () => {
         let asteroidEnv = null;
-        return request.post('/api/spaceEnvs')
-            .send(envData[1])
+        return saveEnv(envData[1])
             .then(res => {
                 asteroidEnv = res.body;
                 return request.get(`/api/spaceEnvs/${asteroidEnv._id}`);
@@ -65,13 +59,10 @@ describe('spaceEnv API', () => {
     });
 
     it('updates a spaceEnv', () => {
-        let savedEnvironment = null; 
-        return request.post('/api/spaceEnvs')
-            .send(envData[0])
+        return saveEnv(envData[0])
             .then(res => {
-                savedEnvironment = res.body;
                 envData[0].name = '#######';
-                return request.put(`/api/spaceEnvs/${savedEnvironment._id}`)
+                return request.put(`/api/spaceEnvs/${res.body._id}`)
                     .send(envData[0]);       
             })
             .then(res => {
@@ -80,12 +71,10 @@ describe('spaceEnv API', () => {
     });
 
     it('deletes environment by id', () => {
-        let savedEnv = null;
         return request.post('/api/spaceEnvs')
             .send(envData[0])
             .then(res => {
-                savedEnv = res.body;
-                return request.delete(`/api/spaceEnvs/${savedEnv._id}`);
+                return request.delete(`/api/spaceEnvs/${res.body._id}`);
             })
             .then(res => {
                 assert.deepEqual(res.body, { removed: true });
@@ -93,16 +82,17 @@ describe('spaceEnv API', () => {
     });
 
     it('patches an environment', () => {
-        return request.post('/api/spaceEnvs')
-            .send(envData[0])
-            .then(({ body: envRes }) => {
-                assert.ok(envRes._id);
-                envRes.name = 'Asteroid Belt';
-                return request.patch(`/api/spaceEnvs/${envRes._id}`)
+        return saveEnv(envData[0])
+            .then(({ body: savedEnv }) => {
+                assert.ok(savedEnv._id);
+                savedEnv.name = 'Asteroid Belt';
+                return request.patch(`/api/spaceEnvs/${savedEnv._id}`)
                     .send({ name: 'Asteroid Belt' })
-                    .then(({ body: updatedEnv }) => {
-                        assert.deepEqual(envRes, updatedEnv);
-                    });
+                    .then(res => res.body)
+                    .then(updatedEnv => [savedEnv, updatedEnv]);
+            })
+            .then(([savedEnv, updatedEnv]) => {
+                assert.deepEqual(savedEnv, updatedEnv);
             });
     });
 });
