@@ -2,6 +2,8 @@ const { assert } = require('chai');
 const db = require('./db');
 const request = require('./request');
 
+// same issues here as spaceEnvs.test.js
+
 describe('ship API', () => {
     
     let shipData = null;

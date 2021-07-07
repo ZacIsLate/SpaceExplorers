@@ -9,10 +9,7 @@ describe('newChar API', () =>{
     
     beforeEach( () => db.drop());
 
-    let token = null;
     let char = null;
-    let savedShip= null;
-
     beforeEach( () => {
         const ship = {
             name: 'Moya',
@@ -32,7 +29,9 @@ describe('newChar API', () =>{
             .then(({ body }) => char = body );
     });
 
+    let savedShip= null;
     beforeEach( () => {
+        // why use the model here when using http in all other areas of test?
         new Ship({
             name: 'Moya',
             healthPoints: 1000,
@@ -45,6 +44,7 @@ describe('newChar API', () =>{
             });
     });
 
+    let token = null;    
     beforeEach( ()=> {
         return request.post('/api/auth/signup')
             .send({ name: 'Tester', password: '007' })

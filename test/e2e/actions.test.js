@@ -54,6 +54,7 @@ describe('actions API', () =>{
                 .then(res => savedEnvironment = res.body)
         ])
             .then(() => {
+                // use event helper
                 testEvent = {
                     scenario: 'You have encountered an Advanced Cylon War Raider Battalion inside of an astroid field!',
                     spaceEnv: savedEnvironment._id,
