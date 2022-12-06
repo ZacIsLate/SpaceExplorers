@@ -14,7 +14,7 @@
     "bcryptjs": "^2.4.3",
     "chai": "^4.1.2",
     "eslint": "^4.8.0",
-    "express": "^4.16.2",
+    "express": "^4.18.2",
     "inquirer": "^3.3.0",
     "jsonfile": "^4.0.0",
     "jsonwebtoken": "^8.1.0",
@@ -31,7 +31,7 @@
     "terminal-kit": "^1.14.0"
   },
   "devDependencies": {
-    "body-parser": "^1.18.2",
+    "body-parser": "^1.20.1",
     "chai": "^4.1.2",
     "chai-http": "^3.0.0",
     "mocha": "^4.0.1"
