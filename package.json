@@ -17,7 +17,7 @@
     "express": "^4.16.2",
     "inquirer": "^3.3.0",
     "jsonfile": "^4.0.0",
-    "jsonwebtoken": "^8.1.0",
+    "jsonwebtoken": "^9.0.0",
     "mkdirp": "^0.5.1",
     "mock-stdin": "^0.3.1",
     "mongoose": "^5.7.5",
